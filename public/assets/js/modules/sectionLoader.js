@@ -5,7 +5,7 @@ import {
   sectionsLinks,
 } from "./../utils/DOMElements.js";
 import { inicializarDetailEntity } from "./../sections/detailEntity.js";
-import { actualizarEnlaceActivo } from "./../utils/utils.js";
+import { updateSectionSelected } from "./../utils/utils.js";
 
 /**
  * Genera la ruta del archivo de la sección.
@@ -150,7 +150,7 @@ export async function loadSection(
     // Solo guarda en localStorage y actualiza el enlace activo si se carga en el contenedor principal
     if (currentContainer === contenedorPrincipal) {
       guardarSeccionEnStorage(nameSection);
-      actualizarEnlaceActivo(nameSection);
+      updateSectionSelected(nameSection);
     }
 
     notificarCarga(currentContainer, nameSection); // Pasar el contenedor a notificarCarga

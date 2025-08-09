@@ -1,4 +1,4 @@
-import { statusContainer, opciones } from "./DOMElements.js";
+import { statusContainer, opciones as sections } from "./DOMElements.js";
 
 /**
  * Actualiza el estado de conexion
@@ -8,11 +8,11 @@ export function updateStatus() {
 
   const circle = statusContainer.querySelector(".circle-status");
   const statusText = statusContainer.querySelector(".statusOnLine");
-
   if (!circle || !statusText) return;
 
   circle.classList.toggle("online", navigator.onLine);
   circle.classList.toggle("offline", !navigator.onLine);
+
   statusText.textContent = navigator.onLine
     ? "En línea."
     : "Sin conexión a internet.";
@@ -22,17 +22,17 @@ export function updateStatus() {
  * Actualiza la seccion activa para cargar la seccion
  * @param {string} sectionName - Nombre de la seccion a activada
  */
-export function actualizarEnlaceActivo(sectionName) {
-  opciones.forEach((op) => {
-    const enlace = op.querySelector("a[data-section]");
-    op.classList.toggle("active", enlace?.dataset.section === sectionName);
+export function updateSectionSelected(sectionName) {
+  sections.forEach((op) => {
+    const section = op.querySelector("a[data-section]");
+    op.classList.toggle("active", section?.dataset.section === sectionName);
   });
 }
 
 /**
  * Saltar Notificacion de Dato no Encontrado
  */
-export function ntfProcesoErroneo(title, message) {
+export function ntfProcessError(title, message) {
   Swal.fire({
     title: title,
     text: message,
@@ -43,7 +43,7 @@ export function ntfProcesoErroneo(title, message) {
 /**
  * Saltar Notificacion de Dato no Encontrado
  */
-export function ntfProcesoExitoso(title, message) {
+export function ntfProcessSuccessful(title, message) {
   Swal.fire({
     title: title,
     text: message,
@@ -54,9 +54,7 @@ export function ntfProcesoExitoso(title, message) {
 /**
  * Saltar notificiacion para ingresar una contraseña
  */
-export async function ntfIngresarContrasenia(
-  title = "Verificación de cuenta..."
-) {
+export async function ntfLoginPassword(title = "Verificación de cuenta...") {
   const { value: password } = await Swal.fire({
     title: title,
     input: "password",
@@ -66,7 +64,7 @@ export async function ntfIngresarContrasenia(
   if (password) {
     return password;
   } else {
-    ntfProcesoErroneo("Oops...", "Ingresa una contraseña valida!");
+    ntfProcessError("Oops...", "Ingresa una contraseña valida!");
     return false;
   }
 }
@@ -74,7 +72,7 @@ export async function ntfIngresarContrasenia(
 /**
  * Saltar notificacion para confirmar una accion
  */
-export function ntfConfirmar(title, message) {
+export function ntfConfirm(title, message) {
   return Swal.fire({
     title: title,
     text: message,

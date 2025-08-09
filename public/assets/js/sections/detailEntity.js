@@ -1,5 +1,5 @@
 import { loadSection } from "./../modules/sectionLoader.js";
-import { ntfConfirmar, ntfProcesoErroneo } from "../utils/utils.js";
+import { ntfConfirm, ntfProcessError } from "../utils/utils.js";
 import { apiRequest } from "../API/api.js";
 
 /**
@@ -127,7 +127,7 @@ function funcionalidadBorrar() {
           const item = e.target.closest("li").querySelector("a");
 
           if (!item) {
-            ntfProcesoErroneo(
+            ntfProcessError(
               "Oops...",
               "Ocurrio un error al tratar de eliminar el archivo!"
             );
@@ -153,7 +153,7 @@ function funcionalidadBorrar() {
                 document.querySelector("#detailResult-container")
               );
             } else {
-              ntfProcesoErroneo("Oops...", status["message"]);
+              ntfProcessError("Oops...", status["message"]);
             }
           }
         }
@@ -185,7 +185,7 @@ function funcionalidadBorrar() {
               document.querySelector("#detailResult-container")
             );
           } else {
-            ntfProcesoErroneo("Oops...", status["message"]);
+            ntfProcessError("Oops...", status["message"]);
           }
         }
       }
@@ -227,7 +227,7 @@ function inicializadorEventos(modal, btns) {
           mostrarDescripcionMantenimiento(response.data);
         }
       } else {
-        ntfProcesoErroneo("Oops...", "No se pudo cargar el contenido!");
+        ntfProcessError("Oops...", "No se pudo cargar el contenido!");
       }
 
       modal.style.display = "flex";
@@ -318,7 +318,7 @@ function mostrarDescripcionMantenimiento(data) {
  * Aviso de confirmación para borrado de archivos
  */
 async function confirmar() {
-  const response = await ntfConfirmar(
+  const response = await ntfConfirm(
     "¿Seguro que deseas borrar este archivo?",
     "Esta acción es irreversible!"
   );

@@ -1,9 +1,9 @@
 import { apiRequest } from "./../API/api.js";
 import {
-  ntfProcesoErroneo,
-  ntfProcesoExitoso,
-  ntfConfirmar,
-  ntfIngresarContrasenia,
+  ntfProcessError,
+  ntfProcessSuccessful,
+  ntfConfirm,
+  ntfLoginPassword,
 } from "../utils/utils.js";
 
 export function initializeManagement() {
@@ -108,7 +108,7 @@ function eventsBtnModals() {
             modalViewDetail.classList.add("active");
           }
         } else {
-          ntfProcesoErroneo("Oops...", response["message"]);
+          ntfProcessError("Oops...", response["message"]);
         }
       }
 
@@ -140,7 +140,7 @@ function eventsBtnModals() {
       if (target.closest("#btnDeleteProfile")) {
         const id = modalDeleteDetail.getAttribute("data-user-id");
 
-        const confirm = await ntfConfirmar(
+        const confirm = await ntfConfirm(
           "¿Estas seguro de realizar esta acción?",
           "Es completamente irreversible."
         );
@@ -153,10 +153,10 @@ function eventsBtnModals() {
           const response = await apiRequest(formData);
 
           if (response.success) {
-            ntfProcesoExitoso("¡Eliminado!", response.message);
+            ntfProcessSuccessful("¡Eliminado!", response.message);
             location.reload();
           } else {
-            ntfProcesoErroneo("Error", response.message);
+            ntfProcessError("Error", response.message);
           }
         } else {
           return;
@@ -172,7 +172,7 @@ function eventsBtnModals() {
         const id = modalModifyDetail.getAttribute("data-user-id");
         formData = new FormData(document.querySelector("#modify-form"));
 
-        const confirm = await ntfConfirmar(
+        const confirm = await ntfConfirm(
           "¿Estas seguro de realizar esta acción?",
           "Es completamente irreversible."
         );
@@ -185,10 +185,10 @@ function eventsBtnModals() {
           const response = await apiRequest(formData);
 
           if (response.success) {
-            ntfProcesoExitoso("¡Modificado!", response.message);
+            ntfProcessSuccessful("¡Modificado!", response.message);
             location.reload();
           } else {
-            ntfProcesoErroneo("Error", response.message);
+            ntfProcessError("Error", response.message);
           }
         } else {
           return;
@@ -203,7 +203,7 @@ function eventsBtnModals() {
         const idClave = target.closest("button").dataset.id;
 
         // Primero pide la clave maestra al usuario
-        const claveIngresada = await ntfIngresarContrasenia();
+        const claveIngresada = await ntfLoginPassword();
         if (!claveIngresada) return;
 
         // Verifica la clave maestra antes de eliminar
@@ -215,7 +215,7 @@ function eventsBtnModals() {
         const respuestaVerificacion = await apiRequest(formDataVerificar);
 
         if (!respuestaVerificacion.success) {
-          ntfProcesoErroneo(
+          ntfProcessError(
             "Error",
             "Clave maestra incorrecta. No se puede eliminar."
           );
@@ -223,7 +223,7 @@ function eventsBtnModals() {
         }
 
         // Confirmación final antes de eliminar
-        const confirm = await ntfConfirmar(
+        const confirm = await ntfConfirm(
           "¿Estás seguro de eliminar esta clave maestra?",
           "Esta acción es irreversible."
         );
@@ -237,10 +237,10 @@ function eventsBtnModals() {
           const response = await apiRequest(formDataClave);
 
           if (response.success) {
-            ntfProcesoExitoso("¡Eliminada!", response.message);
+            ntfProcessSuccessful("¡Eliminada!", response.message);
             location.reload();
           } else {
-            ntfProcesoErroneo("Error", response.message);
+            ntfProcessError("Error", response.message);
           }
         }
         return;
@@ -248,7 +248,7 @@ function eventsBtnModals() {
 
       // Evento para agregar nueva clave maestra
       if (target.closest("#btnActionAddClave")) {
-        const claveIngresada = await ntfIngresarContrasenia(
+        const claveIngresada = await ntfLoginPassword(
           "Ingresa la nueva clave maestra:"
         );
         if (!claveIngresada) return;
@@ -261,10 +261,10 @@ function eventsBtnModals() {
         const response = await apiRequest(formDataClave);
 
         if (response.success) {
-          ntfProcesoExitoso("¡Agregada!", response.message);
+          ntfProcessSuccessful("¡Agregada!", response.message);
           location.reload();
         } else {
-          ntfProcesoErroneo("Error", response.message);
+          ntfProcessError("Error", response.message);
         }
         return;
       }

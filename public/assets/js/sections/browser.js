@@ -5,14 +5,14 @@ import {
   formatInputPhoneNumber,
 } from "./../utils/inputFormatters.js";
 import { searchData, apiRequest } from "./../API/api.js";
-import { ntfConfirmar, ntfProcesoExitoso } from "../utils/utils.js";
+import { ntfConfirm, ntfProcessSuccessful } from "../utils/utils.js";
 
 let initialBrowserFormHTML = ""; // Para guardar el HTML inicial del formulario del buscador
 let conditionalCheckbox = false; // Para manejar el checkbox de condiciones múltiples en el buscador
 const placeholderBtnBrowser = ["Buscar", "Agregar Condición"];
 
 async function confirmarBorrado() {
-  const response = await ntfConfirmar(
+  const response = await ntfConfirm(
     "¿Seguro que deseas borrar estos registros?",
     "Esta acción es irreversible!"
   );
@@ -159,7 +159,7 @@ export function initializeSelectionMenu() {
         }
       });
 
-      ntfProcesoExitoso(
+      ntfProcessSuccessful(
         "Proceso Exitoso!",
         "Se han eliminado los registros de forma satisfactoria!"
       );

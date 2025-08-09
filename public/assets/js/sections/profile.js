@@ -4,10 +4,10 @@ import {
   verificarContraseniaPerfil,
 } from "./../API/api.js";
 import {
-  ntfProcesoExitoso,
-  ntfProcesoErroneo,
-  ntfIngresarContrasenia,
-  ntfConfirmar,
+  ntfProcessSuccessful,
+  ntfProcessError,
+  ntfLoginPassword,
+  ntfConfirm,
 } from "./../utils/utils.js";
 import {
   formatInputDNI,
@@ -53,7 +53,7 @@ export function inicializarPerfil() {
 
       const response = await actualizarDatosPerfil(formData);
       if (response["success"]) {
-        ntfProcesoExitoso(
+        ntfProcessSuccessful(
           "¡Proceso Exitoso!",
           "Se ha actualizado de forma correcta la foto de perfil!"
         );
@@ -61,7 +61,7 @@ export function inicializarPerfil() {
           location.reload();
         }, 1000);
       } else {
-        ntfProcesoErroneo(
+        ntfProcessError(
           "Oops...",
           "No se ha podido actualizar la foto de perfil!"
         );
@@ -82,7 +82,7 @@ export function inicializarPerfil() {
 
       const response = await actualizarDatosPerfil(formData);
       if (response["success"]) {
-        ntfProcesoExitoso(
+        ntfProcessSuccessful(
           "¡Proceso Exitoso!",
           "Se ha borrado de forma correcta tu foto de perfil!"
         );
@@ -90,10 +90,7 @@ export function inicializarPerfil() {
           location.reload();
         }, 1000);
       } else {
-        ntfProcesoErroneo(
-          "Oops...",
-          "No se ha podido borrar tu foto de perfil!"
-        );
+        ntfProcessError("Oops...", "No se ha podido borrar tu foto de perfil!");
       }
     });
   }
@@ -112,10 +109,10 @@ export function inicializarPerfil() {
     }
     btnEditProfile.addEventListener("click", async (e) => {
       if (!btnEditProfile.classList.contains("guardar")) {
-        const passwordAccount = await ntfIngresarContrasenia();
+        const passwordAccount = await ntfLoginPassword();
 
         if (!passwordAccount) {
-          ntfProcesoErroneo("Oops...", "Contraseña Incorrecta!");
+          ntfProcessError("Oops...", "Contraseña Incorrecta!");
           return;
         }
 
@@ -130,12 +127,12 @@ export function inicializarPerfil() {
         const response = await verificarContraseniaPerfil(formData);
 
         if (response["success"]) {
-          ntfProcesoExitoso(
+          ntfProcessSuccessful(
             response["message"],
             "Ya puedes cambiar los datos de tu cuenta..."
           );
         } else {
-          ntfProcesoErroneo("Hubo un error!", response["message"]);
+          ntfProcessError("Hubo un error!", response["message"]);
           return;
         }
       }
@@ -171,12 +168,12 @@ export function inicializarPerfil() {
         const response = await actualizarDatosPerfil(formData);
 
         if (response["success"]) {
-          ntfProcesoExitoso(
+          ntfProcessSuccessful(
             "¡Proceso Exitoso!",
             "Datos Cambiados Correctamente!"
           );
         } else {
-          ntfProcesoErroneo(
+          ntfProcessError(
             "Oops...",
             "Ha ocurrido un error al tratar de actualizar los datos!"
           );
@@ -198,10 +195,10 @@ export function inicializarPerfil() {
 
   if (btnDeleteAccount) {
     btnDeleteAccount.addEventListener("click", async (e) => {
-      const passwordAccount = await ntfIngresarContrasenia();
+      const passwordAccount = await ntfLoginPassword();
 
       if (!passwordAccount) {
-        ntfProcesoErroneo("Oops...", "Contraseña Incorrecta!");
+        ntfProcessError("Oops...", "Contraseña Incorrecta!");
         return;
       }
 
@@ -216,7 +213,7 @@ export function inicializarPerfil() {
       const response = await verificarContraseniaPerfil(formData);
 
       if (response["success"]) {
-        const confirmation = await ntfConfirmar(
+        const confirmation = await ntfConfirm(
           "Advertencia!",
           "¿Estas seguro que deseas realizar esta acción? Esta acción es completamente irreversible!"
         );
@@ -228,13 +225,13 @@ export function inicializarPerfil() {
 
           const message = await apiRequest(formData);
 
-          ntfProcesoExitoso(response["message"], "Cuenta Eliminada!");
+          ntfProcessSuccessful(response["message"], "Cuenta Eliminada!");
           setTimeout(() => {
             location.reload();
           }, 1000);
         }
       } else {
-        ntfProcesoErroneo("Hubo un error!", response["message"]);
+        ntfProcessError("Hubo un error!", response["message"]);
         return;
       }
     });

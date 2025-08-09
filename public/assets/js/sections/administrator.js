@@ -11,7 +11,7 @@ import {
   eliminarDatosAdministrador,
   subirDatosAdministrador,
 } from "./../API/api.js";
-import { ntfProcesoErroneo, ntfProcesoExitoso } from "../utils/utils.js";
+import { ntfProcessError, ntfProcessSuccessful } from "../utils/utils.js";
 import {
   formatMatriculaInput,
   formatInputDNI,
@@ -446,7 +446,7 @@ export async function handleAdminSearch(e) {
   if (itemData["success"]) {
     showAndPopulateForm(searchContainer, section, action, itemData["data"]);
   } else {
-    ntfProcesoErroneo("Oops...", itemData["message"]);
+    ntfProcessError("Oops...", itemData["message"]);
     searchInput.focus();
   }
 }
@@ -488,9 +488,9 @@ export async function handleAdminFormSubmit(e, form) {
   if (response["success"]) {
     // Restaura el estado del formulario y del modal.
     resetAdminModal(form, section, action);
-    ntfProcesoExitoso("¡Proceso Exitoso!", response["message"]);
+    ntfProcessSuccessful("¡Proceso Exitoso!", response["message"]);
   } else {
-    ntfProcesoErroneo("Oops...", response["message"]);
+    ntfProcessError("Oops...", response["message"]);
   }
 }
 
