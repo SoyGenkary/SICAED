@@ -240,10 +240,10 @@ export function prepararContenedorBuscador(
       type: attributesInputOriginal.type || "text",
       name: nameOriginalInput,
       classes: ["search__input"],
-      contenedor: browserGroup,
-      posicion: "beforeend",
+      container: browserGroup,
+      position: "beforeend",
       placeholder: placeholderOriginalInput,
-      atributos: attributesInputOriginal,
+      attributes: attributesInputOriginal,
     });
     if (inputPrincipal) {
       aplicarEstilosInputBrowser(inputPrincipal, { ...stylesInputOriginal });
@@ -254,9 +254,9 @@ export function prepararContenedorBuscador(
     type: "submit",
     name: "browserSearch",
     classes: [],
-    contenedor: browserGroup,
-    posicion: "beforeend",
-    atributos: { id: "btnSearch", value: placeholderBtnBrowser[0] },
+    container: browserGroup,
+    position: "beforeend",
+    attributes: { id: "btnSearch", value: placeholderBtnBrowser[0] },
   });
   if (btnSearch) {
     aplicarEstilosInputBrowser(btnSearch, {
@@ -313,8 +313,8 @@ export function cambiarFormularioBrowser(tipoDeDato, browserGroup) {
       const nameInput = createInput({
         type: "text",
         name: "primaryname",
-        contenedor: browserGroup,
-        posicion: "afterbegin",
+        container: browserGroup,
+        position: "afterbegin",
         placeholder: "Primer Nombre",
       });
       if (nameInput) aplicarEstilosInputBrowser(nameInput);
@@ -325,8 +325,8 @@ export function cambiarFormularioBrowser(tipoDeDato, browserGroup) {
       const lastNameInput = createInput({
         type: "text",
         name: "primarylastname",
-        contenedor: browserGroup,
-        posicion: "afterbegin",
+        container: browserGroup,
+        position: "afterbegin",
         placeholder: "Primer Apellido",
       });
       if (lastNameInput) aplicarEstilosInputBrowser(lastNameInput);
@@ -353,8 +353,8 @@ export function cambiarFormularioBrowser(tipoDeDato, browserGroup) {
       const dniTypeSelect = createSelect({
         name: "tipoDNI",
         id: "tipoDNI",
-        contenedor: browserGroup,
-        posicion: "afterbegin",
+        container: browserGroup,
+        position: "afterbegin",
         options: { "V-": "V-", "E-": "E-" },
       });
 
@@ -374,8 +374,8 @@ export function cambiarFormularioBrowser(tipoDeDato, browserGroup) {
       const contactTypeSelect = createSelect({
         name: "tipoContacto",
         id: "tipoContacto",
-        contenedor: browserGroup,
-        posicion: "afterbegin",
+        container: browserGroup,
+        position: "afterbegin",
         options: { email: "Correo", number: "Teléfono" },
       });
       if (contactTypeSelect) {
@@ -413,7 +413,7 @@ export function cambiarFormularioBrowser(tipoDeDato, browserGroup) {
       const timeInput = createInput({
         type: "time",
         name: "timeAdd",
-        contenedor: browserGroup,
+        container: browserGroup,
         referencia: dateInput,
       });
       if (timeInput) aplicarEstilosInputBrowser(timeInput);
@@ -501,8 +501,8 @@ export function cambiarFormularioBrowser(tipoDeDato, browserGroup) {
         name: "estadoMantenimiento",
         id: "estadoMantenimiento",
         classes: ["search__input"],
-        contenedor: browserGroup,
-        posicion: "afterbegin", // Se inserta al principio.
+        container: browserGroup,
+        position: "afterbegin", // Se inserta al principio.
         options: { si: "Sí", no: "No" },
         addDefaultPlaceholder: true,
         defaultPlaceholderText: "¿Se le realizo servicio?",
@@ -528,7 +528,7 @@ export function cambiarFormularioBrowser(tipoDeDato, browserGroup) {
       const timeInputVehiculo = createInput({
         type: "time",
         name: "timeAddVehiculo",
-        contenedor: browserGroup,
+        container: browserGroup,
         referencia: dateInputVehiculo,
       });
       if (timeInputVehiculo) aplicarEstilosInputBrowser(timeInputVehiculo);

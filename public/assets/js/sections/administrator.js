@@ -132,7 +132,7 @@ function crearSelectBuscadorModal(section, formSearch) {
       name: "prefijoCedulaPersonal",
       id: "prefijoCedulaPersonal",
       classes: ["inputStyle"],
-      contenedor: formSearch,
+      container: formSearch,
       options: {
         "V-": "V-",
         "E-": "E-",
@@ -143,7 +143,7 @@ function crearSelectBuscadorModal(section, formSearch) {
       name: "prefijoIdentificadorVehiculoSearch",
       id: "prefijoIdentificadorVehiculoSearch",
       classes: ["inputStyle"],
-      contenedor: formSearch,
+      container: formSearch,
       options: {
         vin: "Vin",
         matricula: "Matricula",

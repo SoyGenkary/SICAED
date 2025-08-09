@@ -25,10 +25,10 @@ export const SELECTS_MUNICIPIO = [
  * @param {string} config.type - Tipo del input.
  * @param {string} config.name - Nombre del input.
  * @param {string[]} [config.classes=['search__input']] - Array de clases.
- * @param {HTMLElement} config.contenedor - Contenedor donde se agregará.
- * @param {string} [config.posicion='afterbegin'] - Posición de inserción.
+ * @param {HTMLElement} config.container - Contenedor donde se agregará.
+ * @param {string} [config.position='afterbegin'] - Posición de inserción.
  * @param {HTMLElement} [config.referencia=null] - Elemento de referencia para insertBefore.
- * @param {object} [config.atributos={}] - Atributos adicionales.
+ * @param {object} [config.attributes={}] - Atributos adicionales.
  * @param {string} [config.placeholder=''] - Placeholder del input.
  * @returns {HTMLInputElement|null}
  */
@@ -75,8 +75,8 @@ export function createInput({
  * @param {string} config.name - Nombre del select.
  * @param {string} config.id - ID del select.
  * @param {string[]} [config.classes=['search__input']] - Array de clases.
- * @param {HTMLElement} config.contenedor - Contenedor donde se agregará.
- * @param {string} [config.posicion='afterbegin'] - Posición de inserción.
+ * @param {HTMLElement} config.container - Contenedor donde se agregará.
+ * @param {string} [config.position='afterbegin'] - Posición de inserción.
  * @param {object} [config.options={}] - Opciones del select {value: text}.
  * @param {boolean} [config.addDefaultPlaceholder=false] - Si se añade una opción placeholder deshabilitada.
  * @param {string} [config.defaultPlaceholderText='-- Seleccione --'] - Texto para la opción placeholder.
