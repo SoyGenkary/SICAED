@@ -3,10 +3,12 @@ import { statusContainer, opciones } from "./DOMElements.js";
 /**
  * Actualiza el estado de conexion
  */
-export function actualizarEstadoOnline() {
+export function updateStatus() {
   if (!statusContainer) return;
+
   const circle = statusContainer.querySelector(".circle-status");
   const statusText = statusContainer.querySelector(".statusOnLine");
+
   if (!circle || !statusText) return;
 
   circle.classList.toggle("online", navigator.onLine);

@@ -1,4 +1,4 @@
-import { cargarSeccion } from "./../modules/sectionLoader.js";
+import { loadSection } from "./../modules/sectionLoader.js";
 
 export function inicializarPrincipal() {
   const resumenes = document.querySelector(".principal__resumen");
@@ -12,7 +12,7 @@ export function inicializarPrincipal() {
 
     const detallesTabla = tablaVehiculos.querySelector("tbody a");
     detallesTabla.addEventListener("click", (e) => {
-      cargarSeccion("browser");
+      loadSection("browser");
     });
   }
 }
@@ -25,11 +25,11 @@ function verDetalles(e) {
     const segundaClase = clases[1];
 
     if (segundaClase === "resumen-vehiculos") {
-      cargarSeccion("status");
+      loadSection("status");
     } else if (segundaClase === "resumen-conductores") {
-      cargarSeccion("browser");
+      loadSection("browser");
     } else if (segundaClase === "resumen-mantenimientos") {
-      cargarSeccion("browser");
+      loadSection("browser");
     }
   }
 }

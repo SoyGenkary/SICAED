@@ -4,7 +4,7 @@ export const statusContainer = document.querySelector(
   ".main .header .header__onLine"
 );
 export const contenedorPrincipal = document.getElementById("content-container");
-export const opcionesEnlaces = document.querySelectorAll(".option a");
+export const sectionsLinks = document.querySelectorAll(".option a");
 export const LAST_SECTION_KEY = "lastVisitedSection";
 export const DEFAULT_SECTION = "principal";
 

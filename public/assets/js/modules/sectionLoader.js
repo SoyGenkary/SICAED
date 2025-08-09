@@ -2,7 +2,7 @@ import {
   contenedorPrincipal, // Sigue importando el contenedor principal por defecto
   LAST_SECTION_KEY,
   DEFAULT_SECTION,
-  opcionesEnlaces,
+  sectionsLinks,
 } from "./../utils/DOMElements.js";
 import { inicializarDetailEntity } from "./../sections/detailEntity.js";
 import { actualizarEnlaceActivo } from "./../utils/utils.js";
@@ -84,7 +84,7 @@ function notificarCarga(containerElement, nameSection) {
  * @param {boolean} [isInitialLoadFromStorage=false] - Indica si es una carga inicial desde el almacenamiento.
  * @param {HTMLElement} [targetContainer=null] - (Opcional) El elemento DOM donde se cargará la sección. Si no se especifica, usa 'contenedorPrincipal'.
  */
-export async function cargarSeccion(
+export async function loadSection(
   nameSection,
   isInitialLoadFromStorage = false,
   targetContainer = null // Nuevo parámetro opcional
@@ -167,7 +167,7 @@ export async function cargarSeccion(
             `Fallo al cargar '${nameSection}'. Cargando sección por defecto: '${DEFAULT_SECTION}'.`
           );
           // Llamada recursiva a cargarSeccion, asegurándose de usar el contenedor principal
-          await cargarSeccion(DEFAULT_SECTION, false, contenedorPrincipal);
+          await loadSection(DEFAULT_SECTION, false, contenedorPrincipal);
         }
       }
     }
@@ -178,16 +178,14 @@ export async function cargarSeccion(
  * Cargar última sección visitada o sección por defecto
  * Esta función siempre cargará en el contenedor principal.
  */
-export function cargarUltimaSeccion() {
+export function loadLastSection() {
   let lastSection = localStorage.getItem(LAST_SECTION_KEY) || "status";
 
-  const existeOpcion = Array.from(opcionesEnlaces).some(
+  const exist = Array.from(sectionsLinks).some(
     (enlace) => enlace.dataset.section === lastSection
   );
 
-  if (!existeOpcion) {
-    lastSection = "status";
-  }
+  if (!exist) lastSection = "status";
 
-  cargarSeccion(lastSection, true, contenedorPrincipal); // Asegura que siempre use el contenedor principal
+  loadSection(lastSection, true, contenedorPrincipal); // Asegura que siempre use el contenedor principal
 }

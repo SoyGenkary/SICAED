@@ -1,4 +1,4 @@
-import { cargarSeccion } from "./../modules/sectionLoader.js";
+import { loadSection } from "./../modules/sectionLoader.js";
 import { ntfConfirmar, ntfProcesoErroneo } from "../utils/utils.js";
 import { apiRequest } from "../API/api.js";
 
@@ -40,7 +40,7 @@ export function cargarDetallesDeBusqueda(clickedRow, target) {
   if (entityId && entityType) {
     // Usamos la función cargarSeccion para mostrar la vista de detalle
     // Pasamos los parámetros como parte del nombre de la sección
-    cargarSeccion(
+    loadSection(
       `detailEntity.php?tipo=${entityType}&id=${entityId}`,
       false,
       document.querySelector("#detailResult-container")
@@ -147,7 +147,7 @@ function funcionalidadBorrar() {
             );
 
             if (status["success"]) {
-              cargarSeccion(
+              loadSection(
                 localStorage.getItem("resultado"),
                 false,
                 document.querySelector("#detailResult-container")
@@ -179,7 +179,7 @@ function funcionalidadBorrar() {
           );
 
           if (status["success"]) {
-            cargarSeccion(
+            loadSection(
               localStorage.getItem("resultado"),
               false,
               document.querySelector("#detailResult-container")

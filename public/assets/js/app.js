@@ -1,4 +1,3 @@
-import { inicializarSICAED } from "./pages/dashboard.js";
-
+import { inicializarSICAED } from "./pages/layout.js";
 
 document.addEventListener("DOMContentLoaded", inicializarSICAED);

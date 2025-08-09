@@ -82,7 +82,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!response["success"]) {
         ntfProcesoErroneo("Oops...", response["message"]);
       } else {
-        location.assign("./dashboard.php");
+        location.assign("./layout.php");
       }
     });
   }
