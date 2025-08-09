@@ -1,0 +1,79 @@
+/*
+==========================================================================
+                        ANIMACIONES (@keyframes)
+==========================================================================
+*/
+@keyframes svgFillColor {
+  0% {
+    fill: inherit;
+  }
+  100% {
+    fill: var(--color-one);
+  }
+}
+
+@keyframes seleccionDeOpcion {
+  0% {
+    width: 0;
+    left: -10px;
+    opacity: 0;
+  }
+  100% {
+    width: 6px;
+    opacity: 1;
+    border-radius: 0 3px 3px 0;
+  }
+}
+
+@keyframes pulseStatusOnline {
+  0% {
+    box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 8px rgba(40, 167, 69, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(40, 167, 69, 0);
+  }
+}
+
+@keyframes pulseStatusOffline {
+  0% {
+    box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 8px rgba(220, 53, 69, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(220, 53, 69, 0);
+  }
+}
+
+@keyframes aparicionSuave {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes cloud {
+  0% {
+    transform: translate(0%, -50%);
+  }
+  25% {
+    transform: translate(-25%, -50%);
+  }
+  50% {
+    transform: translate(-50%, -50%);
+  }
+  75% {
+    transform: translate(-25%, -50%);
+  }
+  100% {
+    transform: translate(0%, -50%);
+  }
+}

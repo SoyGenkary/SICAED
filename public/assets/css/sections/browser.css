@@ -1,0 +1,428 @@
+/*
+==========================================================================
+SECCIÓN BUSCADOR - RESUMEN DEL BROWSER (.browser-section/.browser__container)
+==========================================================================
+*/
+.browser-section .browser__container {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 40px;
+  row-gap: 20px;
+  padding: 2px;
+  margin-bottom: 10px;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  transition: clip-path 0.09s ease-in;
+}
+
+.browser-section .browser__container.close {
+  clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+}
+
+.browser-section .header__browser {
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+}
+
+.browser-section .header__browser button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: fit-content;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.browser-section .header__browser svg {
+  fill: var(--color-texto-deseleccionado);
+  transition: transform 0.1s linear;
+}
+
+.browser-section:has(.browser__container.close) .header__browser svg {
+  transform: rotate(-180deg);
+}
+
+.browser-section .browser__container .browser__group {
+  flex: 1 0 600px;
+  display: flex;
+  position: relative;
+}
+
+.browser-section .browser__container .browser__group svg,
+.browser-tools__groups svg {
+  fill: var(--color-buttons-primary);
+  position: absolute;
+  width: 20px;
+  height: auto;
+  top: 50%;
+  left: 12px;
+  transform: translate(0, -50%);
+}
+
+.browser-section .browser__container .browser__group .search__input {
+  font-family: inherit;
+  width: 100%;
+  border: 1px solid var(--color-dark-gray);
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  padding-left: 2.5rem;
+  padding-right: 1rem;
+  border-radius: 0.5rem;
+  border-bottom-right-radius: 0;
+  border-top-right-radius: 0;
+  background: var(--bg-color-primary);
+}
+
+.browser-section .browser__container .browser__group #btnSearch,
+.browser-section .browser__container .browser__group #addConditional {
+  font-family: inherit;
+  border: none;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  border-radius: 0.5rem;
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+  background: var(--color-buttons-primary);
+  color: var(--bg-color-primary);
+  cursor: pointer;
+}
+
+.browser-section .browser__container .browser__group #btnSearch:hover,
+.browser-section .browser__container .browser__group #addConditional:hover {
+  background-color: var(--color-buttons-primary-hover);
+}
+
+.browser-section .browser__container .browser__group #btnSearch:focus-visible,
+.browser-section
+  .browser__container
+  .browser__group
+  #addConditional:focus-visible {
+  outline: none;
+}
+
+.browser__tools {
+  flex: 1 0 600px;
+  display: flex;
+  gap: 40px;
+}
+
+.browser-tools__groups {
+  display: flex;
+  width: 100%;
+  position: relative;
+}
+
+.browser-section .browser__container .browser__tools .select-default {
+  font-family: inherit;
+  width: 100%;
+  border: 1px solid var(--color-dark-gray);
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  padding-left: 2.5rem;
+  padding-right: 1rem;
+  border-radius: 0.5rem;
+  background: var(--bg-color-primary);
+}
+
+.browser-section .browser__container .browser__conditional {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.browser-section
+  .browser__container
+  .browser__conditional
+  .activation-conditional {
+  width: 100%;
+  display: flex;
+  gap: 5px;
+  margin-top: -8px;
+  margin-bottom: 10px;
+}
+
+.activation-conditional label {
+  font-size: 0.8rem;
+}
+
+.browser-section .browser__container .browser__conditional .conditional__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.conditional__list .conditional {
+  display: flex;
+  border: 1px solid var(--color-buttons-primary);
+  background-color: #2553df33;
+  font-size: 0.8rem;
+  padding: 10px 20px;
+  border-radius: 9999px;
+  gap: 5px;
+  align-items: center;
+  justify-content: center;
+}
+.conditional__list .conditional button {
+  display: flex;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+.conditional__list .conditional svg {
+  width: 18px;
+  height: auto;
+  fill: var(--color-buttons-primary);
+  transition: transform 0.1s;
+}
+
+.conditional__list .conditional button:hover svg {
+  transform: scale(1.5);
+}
+.browser-section
+  .browser__container
+  .browser__conditional
+  .conditional__container {
+  display: none;
+}
+.browser-section
+  .browser__container
+  .browser__conditional:has(#multi-conditional:checked)
+  .conditional__container {
+  display: block;
+}
+
+/* 9.1 Seccion de resultados de busqueda */
+.browser-section .results__container,
+.browser-section .results__header {
+  margin-bottom: 10px;
+}
+
+.browser-section .results__container {
+  display: flex;
+  flex-direction: column;
+  overflow-y: hidden;
+  overflow-x: auto;
+  gap: 30px;
+}
+
+.browser-section .results__header h3 {
+  font-size: 1rem;
+  color: #444;
+}
+
+.browser-section table {
+  width: 100%;
+  font-size: 0.8rem;
+  color: #555;
+  text-align: left;
+  border-collapse: collapse;
+}
+
+.browser-section th,
+.browser-section td {
+  padding: 12px 16px;
+}
+
+.browser-section th:first-child,
+.browser-section td:first-child {
+  width: 40px;
+}
+
+.results_table th:first-child input[type="checkbox"],
+.results_table td:first-child input[type="checkbox"] {
+  margin: 0 auto;
+  display: block;
+  position: relative;
+}
+
+/* 9.2 Estilo componentes de cada resultado.*/
+.browser-section tbody tr .info {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.browser-section tbody tr .info .image {
+  width: 36px;
+  height: 36px;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+.browser-section tbody tr .info .image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.browser-section tbody tr .info .basic__info {
+  display: flex;
+  line-height: 1rem;
+  flex-direction: column;
+}
+
+.browser-section tbody tr {
+  min-height: 65.4px;
+  max-height: 65.4px;
+  position: relative;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+.assignment-date {
+  font-size: 0.65rem;
+  border: 1px solid var(--color-dark-gray);
+  padding: 2px 12px;
+  border-radius: 10px;
+  display: inline-block;
+  text-align: center;
+  max-width: 100px;
+  width: 100%;
+}
+
+.assignment-date.assignment--assignment {
+  background-color: #46df7f44;
+  color: #14532d;
+  border-color: #14532d;
+}
+
+.assignment-date.assignment--unassigned {
+  background-color: #fbeaea;
+  color: #7f1d1d;
+  border-color: #7f1d1d;
+}
+
+/* ESTILOS VEHICULOS */
+
+.browser-section .vehiculos tbody tr:hover {
+  background-color: #2553df22;
+}
+
+.browser-section .vehiculos tbody tr::after {
+  content: "";
+  position: absolute;
+  width: 0px;
+  height: 100%;
+  background-color: #2553df;
+  top: 0;
+  left: 0;
+  transition: width 0.1s;
+}
+
+.browser-section .vehiculos [type="checkbox"] {
+  accent-color: #2553df;
+}
+
+.browser-section .vehiculos tbody tr:hover::after {
+  width: 4px;
+}
+
+.browser-section .vehiculos tbody tr:has([type="checkbox"]:checked)::after {
+  width: 4px;
+  height: 100%;
+}
+.browser-section .vehiculos tbody tr:has([type="checkbox"]:checked) {
+  background-color: #2553df22;
+}
+
+/* ESTILOS PERSONAL */
+
+.browser-section .personal tbody tr:hover {
+  background-color: #8c1af622;
+}
+
+.browser-section .personal tbody tr::after {
+  content: "";
+  position: absolute;
+  width: 0px;
+  height: 100%;
+  background-color: #8c1af6;
+  top: 0;
+  left: 0;
+  transition: width 0.1s;
+}
+
+.browser-section .personal [type="checkbox"] {
+  accent-color: #8c1af6;
+}
+
+.browser-section .personal tbody tr:hover::after {
+  width: 4px;
+}
+
+.browser-section .personal tbody tr:has([type="checkbox"]:checked)::after {
+  width: 4px;
+  height: 100%;
+}
+.browser-section .personal tbody tr:has([type="checkbox"]:checked) {
+  background-color: #8c1af622;
+}
+
+.browser-section .vehiculos {
+  margin-top: 30px;
+}
+
+.browser-section :is(.personal, .vehiculos) {
+  padding: 1.5rem;
+  border-radius: var(--border-radius-sections);
+  border: 1px solid var(--color-medium-gray);
+}
+
+/* 9.3 Estilos Menú de Selección Flotante */
+.selection-menu {
+  position: fixed;
+  bottom: -100px; /* Inicia oculto fuera de la pantalla */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--color-pannels-secondary);
+  color: #fff;
+  padding: 1rem 1.5rem;
+  border-radius: var(--border-radius-sections) var(--border-radius-sections) 0 0;
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  z-index: 100;
+  transition: bottom 0.3s ease-in-out;
+}
+
+.selection-menu.show {
+  bottom: 0; /* Lo muestra en la parte inferior */
+}
+
+.selection-menu span {
+  font-weight: 500;
+  font-size: 0.9rem;
+  min-width: 120px;
+  text-align: center;
+}
+
+.selection-menu button {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  padding: 0.5rem 1rem;
+  border-radius: calc(var(--border-radius-sections) / 2);
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 500;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.selection-menu button#deleteSelectionBtn {
+  background-color: rgba(255, 0, 0, 0.6);
+}
+
+.selection-menu button#deleteSelectionBtn:hover {
+  background-color: rgba(255, 0, 0, 0.7);
+}
+
+.selection-menu button:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+.results_table tr.hidden-row {
+  display: none;
+}

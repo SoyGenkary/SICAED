@@ -1,0 +1,375 @@
+.management-section {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.management-container,
+.management-details {
+  width: 100%;
+  overflow-x: auto;
+  padding: 1.5rem;
+  border-radius: var(--border-radius-sections);
+  border: 1px solid var(--color-medium-gray);
+  margin-bottom: 1.5rem;
+}
+
+.management-details ul > li {
+  margin-left: 1rem;
+  font-size: 1rem;
+  list-style: circle;
+}
+
+.management-container .table {
+  width: 100%;
+  text-align: left;
+}
+
+.table caption {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.table:first-child {
+  margin-bottom: 1.5rem;
+}
+
+.table thead th {
+  padding: 12px 16px;
+}
+
+.table tbody tr {
+  color: #555;
+  width: 100%;
+  height: 100%;
+  min-height: 65.4px;
+  max-height: 65.4px;
+}
+
+.table tbody td {
+  padding: 12px 16px;
+}
+
+.table tbody tr .image {
+  width: 40px;
+  height: 40px;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+.table tbody tr .image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.table .actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.table button {
+  padding: 0.3rem;
+  background-color: transparent;
+  cursor: pointer;
+  border: none;
+  border-radius: 3px;
+  transition: transform 0.1s ease-in-out;
+}
+
+.table button > svg {
+  width: 20px;
+  height: 20px;
+  fill: white;
+  vertical-align: top;
+}
+
+.table button#btnActionView {
+  background-color: var(--color-warning);
+}
+
+.table button#btnActionModify {
+  background-color: var(--color-buttons-primary);
+}
+
+.table button#btnActionDelete,
+.table button#btnActionDeleteClave {
+  background-color: var(--color-danger);
+}
+
+.table button#btnActionAddClave {
+  background-color: var(--color-success);
+}
+
+.table button#btnActionView:hover,
+.table button#btnActionModify:hover,
+.table button#btnActionDelete:hover,
+.table button#btnActionDeleteClave:hover,
+.table button#btnActionAddClave:hover {
+  filter: brightness(0.9);
+  transform: translateY(-2px);
+}
+
+/* Estilos del Contenedor de Modales (Overlay) */
+.management-section .modals-actions {
+  display: none; /* Oculto por defecto */
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Fondo semitransparente */
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  overflow-y: auto;
+}
+
+.management-section .modals-actions.active {
+  display: block; /* Se muestra con la clase 'active' */
+}
+
+/* Estilos del Contenedor del Modal Individual */
+.modals-actions .modals-container {
+  width: 100%;
+  max-width: 900px; /* Ancho máximo del modal */
+  margin: 2.5% auto;
+  background-color: var(
+    --color-pannels-primary,
+    #2c2f33
+  ); /* Color de fondo del modal */
+  border-radius: var(--border-radius-sections, 8px);
+  box-shadow: var(--shadow-lg, 0 10px 25px rgba(0, 0, 0, 0.5));
+  display: flex;
+  flex-direction: column;
+}
+
+.modal {
+  display: none; /* Ocultar modales individuales por defecto */
+}
+
+.modal.active {
+  display: block; /* Mostrar el modal activo */
+}
+
+/* Estilos del Contenido del Modal */
+.modal-content {
+  padding: 2rem;
+  overflow-y: auto;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--color-medium-gray);
+}
+
+.modal-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.close-btn {
+  cursor: pointer;
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--color-texto-deseleccionado);
+  background: none;
+  border: none;
+}
+
+.close-btn:hover {
+  color: var(--color-danger);
+}
+
+.modal-body {
+  padding: 1.5rem 0;
+}
+
+.view-detail .modal-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-bottom: 1px solid var(--color-medium-gray);
+}
+
+.view-detail .user-photo {
+  width: 100%;
+  display: flex;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--color-medium-gray);
+}
+
+.view-detail .user-history h2 {
+  margin: 1rem 0;
+}
+
+#view-photo {
+  max-width: 180px;
+  border-radius: 50%;
+  margin: 0 auto;
+}
+
+.delete-detail .warning {
+  font-weight: bold;
+  color: var(--color-danger);
+  text-align: center;
+}
+
+.delete-detail .modal-body {
+  padding-bottom: 0;
+}
+
+.modal-body .detail-item {
+  margin-bottom: 0.75rem;
+  font-size: 1rem;
+}
+
+/* Estilos de Formularios dentro del Modal */
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.form-control {
+  font-family: inherit;
+  width: 100%;
+  padding: 0.75rem;
+  border-radius: 5px;
+  border: 1px solid var(--color-medium-gray, #555);
+  color: var(--color-texto-principal);
+}
+
+/* Estilos de Botones del Modal */
+.btn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: filter 0.2s;
+}
+
+.btn:hover {
+  filter: brightness(0.9);
+}
+
+.btn-primary {
+  background-color: var(--color-buttons-primary, #7289da);
+  color: white;
+}
+
+.btn-secondary {
+  background-color: var(--color-medium-gray, #6c757d);
+  color: white;
+}
+
+.btn-danger {
+  background-color: var(--color-danger, #f04747);
+  color: white;
+}
+
+#btnChangeProfile {
+  font-family: inherit;
+  background-color: #1976d2;
+  color: #fff;
+  border: none;
+  padding: 10px 28px;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(25, 118, 210, 0.08);
+  transition: background 0.2s, transform 0.1s;
+  letter-spacing: 0.5px;
+}
+
+#btnChangeProfile:hover,
+#btnChangeProfile:focus {
+  background-color: #1565c0;
+  transform: translateY(-2px) scale(1.03);
+  outline: none;
+}
+
+#btnDeleteProfile {
+  background-color: #d32f2f;
+  color: #fff;
+  border: none;
+  margin-top: 1rem;
+  padding: 10px 28px;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(211, 47, 47, 0.08);
+  transition: background 0.2s, transform 0.1s;
+  letter-spacing: 0.5px;
+}
+
+#btnDeleteProfile:hover,
+#btnDeleteProfile:focus {
+  background-color: #b71c1c;
+  transform: translateY(-2px) scale(1.03);
+  outline: none;
+}
+
+/* Estilos personalizados para historial en modal de gestión */
+.historial-item:first-child {
+  margin-top: 1.5rem;
+}
+.historial-item {
+  padding: 8px 12px;
+  margin-bottom: 6px;
+  border-radius: 6px;
+  font-size: 15px;
+  font-family: "Segoe UI", Arial, sans-serif;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+}
+.historial-accion {
+  font-weight: bold;
+}
+.historial-fecha {
+  color: #888;
+  font-size: 13px;
+  margin-left: auto;
+}
+
+.historial-login {
+  background: #e6f7ff;
+  color: #1890ff;
+  border-left: 5px solid #1890ff;
+}
+.historial-logout {
+  background: #fff7e6;
+  color: #c78c00;
+  border-left: 5px solid var(--color-warning);
+}
+.historial-modify {
+  background: #f6ffed;
+  color: #52c41a;
+  border-left: 5px solid #52c41a;
+}
+.historial-eliminar {
+  background: #fff1f0;
+  color: #f5222d;
+  border-left: 5px solid #f5222d;
+}
+.historial-crear {
+  background: #f9f0ff;
+  color: #722ed1;
+  border-left: 5px solid #722ed1;
+}
+.historial-otro {
+  background: #f0f0f0;
+  color: #595959;
+  border-left: 5px solid #bfbfbf;
+}
