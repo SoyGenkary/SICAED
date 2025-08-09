@@ -1,5 +1,4 @@
 // ELEMENTOS Y CONSTANTES GLOBALES
-export const sections = document.querySelectorAll(".option");
 export const statusContainer = document.querySelector(
   ".main .header .header__onLine"
 );

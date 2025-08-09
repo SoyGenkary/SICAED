@@ -1,4 +1,4 @@
-import { statusContainer, sections } from "./DOMElements.js";
+import { statusContainer, sectionsLinks } from "./DOMElements.js";
 
 /**
  * Actualiza el estado de conexion
@@ -19,13 +19,15 @@ export function updateStatus() {
 }
 
 /**
- * Actualiza la seccion activa para cargar la seccion
- * @param {string} sectionName - Nombre de la seccion a activada
+ * Actualiza la parte visual activa para cargar la seccion
+ * @param {string} sectionName - Nombre de la seccion a activar
  */
 export function updateSectionSelected(sectionName) {
-  sections.forEach((op) => {
-    const section = op.querySelector("a[data-section]");
-    op.classList.toggle("active", section?.dataset.section === sectionName);
+  sectionsLinks.forEach((section) => {
+    const item = section.closest(".option");
+    const data = section?.dataset.section;
+
+    item.classList.toggle("active", data === sectionName);
   });
 }
 
