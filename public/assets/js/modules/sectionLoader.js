@@ -1,5 +1,5 @@
 import {
-  contenedorPrincipal, // Sigue importando el contenedor principal por defecto
+  mainContainer, // Sigue importando el contenedor principal por defecto
   LAST_SECTION_KEY,
   DEFAULT_SECTION,
   sectionsLinks,
@@ -90,7 +90,7 @@ export async function loadSection(
   targetContainer = null // Nuevo parámetro opcional
 ) {
   // Determina qué contenedor usar: el especificado o el predeterminado
-  const currentContainer = targetContainer || contenedorPrincipal;
+  const currentContainer = targetContainer || mainContainer;
 
   if (!currentContainer) {
     console.error(
@@ -100,7 +100,7 @@ export async function loadSection(
   }
 
   if (currentContainer == document.querySelector("#detailResult-container")) {
-    contenedorPrincipal.style.display = "none";
+    mainContainer.style.display = "none";
     const btnBackButtonModal =
       currentContainer.querySelector("#closeModalDetail");
 
@@ -110,14 +110,14 @@ export async function loadSection(
         (e) => {
           e.preventDefault();
           currentContainer.innerHTML = "";
-          contenedorPrincipal.style.display = "block";
+          mainContainer.style.display = "block";
         },
         { once: true }
       );
     }
   } else {
     document.querySelector("#detailResult-container").innerHTML = "";
-    contenedorPrincipal.style.display = "block";
+    mainContainer.style.display = "block";
   }
 
   const filePath = generarRutaArchivo(nameSection);
@@ -136,7 +136,7 @@ export async function loadSection(
           (e) => {
             e.preventDefault();
             currentContainer.innerHTML = "";
-            contenedorPrincipal.style.display = "block";
+            mainContainer.style.display = "block";
           },
           { once: true }
         );
@@ -148,7 +148,7 @@ export async function loadSection(
     }
 
     // Solo guarda en localStorage y actualiza el enlace activo si se carga en el contenedor principal
-    if (currentContainer === contenedorPrincipal) {
+    if (currentContainer === mainContainer) {
       guardarSeccionEnStorage(nameSection);
       updateSectionSelected(nameSection);
     }
@@ -159,7 +159,7 @@ export async function loadSection(
     mostrarError(currentContainer, error.message); // Pasar el contenedor a mostrarError
 
     // La lógica de recarga por defecto solo aplica si el error ocurre en el contenedor principal
-    if (currentContainer === contenedorPrincipal) {
+    if (currentContainer === mainContainer) {
       if (isInitialLoadFromStorage || nameSection !== DEFAULT_SECTION) {
         localStorage.removeItem(LAST_SECTION_KEY);
         if (nameSection !== DEFAULT_SECTION) {
@@ -167,7 +167,7 @@ export async function loadSection(
             `Fallo al cargar '${nameSection}'. Cargando sección por defecto: '${DEFAULT_SECTION}'.`
           );
           // Llamada recursiva a cargarSeccion, asegurándose de usar el contenedor principal
-          await loadSection(DEFAULT_SECTION, false, contenedorPrincipal);
+          await loadSection(DEFAULT_SECTION, false, mainContainer);
         }
       }
     }
@@ -187,5 +187,5 @@ export function loadLastSection() {
 
   if (!exist) lastSection = "status";
 
-  loadSection(lastSection, true, contenedorPrincipal); // Asegura que siempre use el contenedor principal
+  loadSection(lastSection, true, mainContainer); // Asegura que siempre use el contenedor principal
 }

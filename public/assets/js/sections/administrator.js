@@ -1,5 +1,5 @@
 import {
-  crearSelect,
+  createSelect,
   SELECTS_MUNICIPIO,
   SELECTS_ESTADO,
 } from "./../utils/DOMElements.js";
@@ -128,7 +128,7 @@ function crearSelectBuscadorModal(section, formSearch) {
   selects?.remove();
 
   if (["conductores", "personal"].includes(section)) {
-    crearSelect({
+    createSelect({
       name: "prefijoCedulaPersonal",
       id: "prefijoCedulaPersonal",
       classes: ["inputStyle"],
@@ -139,7 +139,7 @@ function crearSelectBuscadorModal(section, formSearch) {
       },
     }).style.width = "fit-content";
   } else if (section === "vehiculos") {
-    const selectVehiculos = crearSelect({
+    const selectVehiculos = createSelect({
       name: "prefijoIdentificadorVehiculoSearch",
       id: "prefijoIdentificadorVehiculoSearch",
       classes: ["inputStyle"],

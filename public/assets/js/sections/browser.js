@@ -1,4 +1,4 @@
-import { crearInput, crearSelect } from "./../utils/DOMElements.js";
+import { createInput, createSelect } from "./../utils/DOMElements.js";
 import {
   formatMatriculaInput,
   formatInputDNI,
@@ -236,7 +236,7 @@ export function prepararContenedorBuscador(
   let inputPrincipal = null;
 
   if (nameOriginalInput && nameOriginalInput !== "dummyInputMantenimiento") {
-    inputPrincipal = crearInput({
+    inputPrincipal = createInput({
       type: attributesInputOriginal.type || "text",
       name: nameOriginalInput,
       classes: ["search__input"],
@@ -250,7 +250,7 @@ export function prepararContenedorBuscador(
     }
   }
 
-  const btnSearch = crearInput({
+  const btnSearch = createInput({
     type: "submit",
     name: "browserSearch",
     classes: [],
@@ -310,7 +310,7 @@ export function cambiarFormularioBrowser(tipoDeDato, browserGroup) {
       break;
     case "personal:nombre": {
       prepararContenedorBuscador(browserGroup, "Segundo Nombre", "secondname");
-      const nameInput = crearInput({
+      const nameInput = createInput({
         type: "text",
         name: "primaryname",
         contenedor: browserGroup,
@@ -322,7 +322,7 @@ export function cambiarFormularioBrowser(tipoDeDato, browserGroup) {
     }
     case "personal:apellido": {
       prepararContenedorBuscador(browserGroup, "Segundo Apellido", "lastname");
-      const lastNameInput = crearInput({
+      const lastNameInput = createInput({
         type: "text",
         name: "primarylastname",
         contenedor: browserGroup,
@@ -350,7 +350,7 @@ export function cambiarFormularioBrowser(tipoDeDato, browserGroup) {
         });
       }
 
-      const dniTypeSelect = crearSelect({
+      const dniTypeSelect = createSelect({
         name: "tipoDNI",
         id: "tipoDNI",
         contenedor: browserGroup,
@@ -371,7 +371,7 @@ export function cambiarFormularioBrowser(tipoDeDato, browserGroup) {
         "Email o Número de Teléfono",
         "contactValue"
       );
-      const contactTypeSelect = crearSelect({
+      const contactTypeSelect = createSelect({
         name: "tipoContacto",
         id: "tipoContacto",
         contenedor: browserGroup,
@@ -410,7 +410,7 @@ export function cambiarFormularioBrowser(tipoDeDato, browserGroup) {
       );
       if (dateInput) dateInput.placeholder = "Ingresa la Fecha Específica";
 
-      const timeInput = crearInput({
+      const timeInput = createInput({
         type: "time",
         name: "timeAdd",
         contenedor: browserGroup,
@@ -497,7 +497,7 @@ export function cambiarFormularioBrowser(tipoDeDato, browserGroup) {
       );
 
       // 2. Ahora, crea y añade el <select> específico para este filtro al inicio del contenedor.
-      const selectMantenimiento = crearSelect({
+      const selectMantenimiento = createSelect({
         name: "estadoMantenimiento",
         id: "estadoMantenimiento",
         classes: ["search__input"],
@@ -525,7 +525,7 @@ export function cambiarFormularioBrowser(tipoDeDato, browserGroup) {
       if (dateInputVehiculo)
         dateInputVehiculo.placeholder = "Fecha de Agregado del Vehículo";
 
-      const timeInputVehiculo = crearInput({
+      const timeInputVehiculo = createInput({
         type: "time",
         name: "timeAddVehiculo",
         contenedor: browserGroup,

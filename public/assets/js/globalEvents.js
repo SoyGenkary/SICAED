@@ -1,4 +1,4 @@
-import { contenedorPrincipal } from "./utils/DOMElements.js";
+import { mainContainer } from "./utils/DOMElements.js";
 import {
   handleBrowserSearch,
   cambiarFormularioBrowser,
@@ -37,8 +37,8 @@ import { initializeManagement } from "./sections/management.js";
  */
 export function registrarEventosGlobales() {
   // Eventos del contenedor principal
-  if (contenedorPrincipal) {
-    contenedorPrincipal.addEventListener("sectionloaded", (event) => {
+  if (mainContainer) {
+    mainContainer.addEventListener("sectionloaded", (event) => {
       const { sectionName } = event.detail;
       if (sectionName === "profile") {
         inicializarPerfil();
@@ -54,16 +54,16 @@ export function registrarEventosGlobales() {
     });
 
     // Eventos de clic en el contenedor principal
-    contenedorPrincipal.addEventListener("click", manejarClicksContenedor);
+    mainContainer.addEventListener("click", manejarClicksContenedor);
 
     // Eventos de input en el contenedor principal
-    contenedorPrincipal.addEventListener("input", manejarInputsContenedor);
+    mainContainer.addEventListener("input", manejarInputsContenedor);
 
     // Eventos de cambio en el contenedor principal
-    contenedorPrincipal.addEventListener("change", manejarCambiosContenedor);
+    mainContainer.addEventListener("change", manejarCambiosContenedor);
 
     // Eventos de submit en el contenedor principal
-    contenedorPrincipal.addEventListener("submit", manejarSubmitsContenedor);
+    mainContainer.addEventListener("submit", manejarSubmitsContenedor);
   }
 
   // Eventos del menú de perfil

@@ -2,7 +2,7 @@
 export const statusContainer = document.querySelector(
   ".main .header .header__onLine"
 );
-export const contenedorPrincipal = document.getElementById("content-container");
+export const mainContainer = document.getElementById("content-container");
 export const sectionsLinks = document.querySelectorAll(".option a");
 export const LAST_SECTION_KEY = "lastVisitedSection";
 export const DEFAULT_SECTION = "principal";
@@ -32,38 +32,41 @@ export const SELECTS_MUNICIPIO = [
  * @param {string} [config.placeholder=''] - Placeholder del input.
  * @returns {HTMLInputElement|null}
  */
-export function crearInput({
+export function createInput({
   type,
   name,
   classes = ["search__input"],
-  contenedor,
-  posicion = "afterbegin",
-  referencia = null,
-  atributos = {},
+  container,
+  position = "afterbegin",
+  reference = null,
+  attributes = {},
   placeholder = "",
 }) {
-  if (!type || !name || !contenedor) return null;
-  const nuevoElemento = document.createElement("input");
-  nuevoElemento.type = type;
-  nuevoElemento.name = name;
-  nuevoElemento.placeholder = placeholder;
-  classes.forEach((cls) => nuevoElemento.classList.add(cls));
-  Object.entries(atributos).forEach(([key, value]) =>
-    nuevoElemento.setAttribute(key, value)
+  if (!type || !name || !container) return;
+
+  const newElement = document.createElement("input");
+  newElement.type = type;
+  newElement.name = name;
+  newElement.placeholder = placeholder;
+
+  classes.forEach((cls) => newElement.classList.add(cls));
+
+  Object.entries(attributes).forEach(([key, value]) =>
+    newElement.setAttribute(key, value)
   );
 
   if (
-    referencia &&
-    referencia.parentNode === contenedor &&
-    posicion === "beforeend"
+    reference &&
+    reference.parentNode === container &&
+    position === "beforeend"
   ) {
-    referencia.insertAdjacentElement("afterend", nuevoElemento);
-  } else if (referencia && referencia.parentNode === contenedor) {
-    contenedor.insertBefore(nuevoElemento, referencia.nextSibling);
+    reference.insertAdjacentElement("afterend", newElement);
+  } else if (reference && reference.parentNode === container) {
+    container.insertBefore(newElement, reference.nextSibling);
   } else {
-    contenedor.insertAdjacentElement(posicion, nuevoElemento);
+    container.insertAdjacentElement(position, newElement);
   }
-  return nuevoElemento;
+  return newElement;
 }
 
 /**
@@ -79,21 +82,23 @@ export function crearInput({
  * @param {string} [config.defaultPlaceholderText='-- Seleccione --'] - Texto para la opción placeholder.
  * @returns {HTMLSelectElement|null}
  */
-export function crearSelect({
+export function createSelect({
   name,
   id,
   classes = ["search__input"],
-  contenedor,
-  posicion = "afterbegin",
+  container,
+  position = "afterbegin",
   options = {},
   addDefaultPlaceholder = false,
   defaultPlaceholderText = "-- Seleccione --",
 }) {
-  if (!name || !id || !contenedor) return null;
-  const nuevoElemento = document.createElement("select");
-  nuevoElemento.name = name;
-  nuevoElemento.id = id;
-  classes.forEach((cls) => nuevoElemento.classList.add(cls));
+  if (!name || !id || !container) return;
+
+  const newElement = document.createElement("select");
+  newElement.name = name;
+  newElement.id = id;
+
+  classes.forEach((cls) => newElement.classList.add(cls));
 
   if (addDefaultPlaceholder) {
     const placeholderOption = document.createElement("option");
@@ -101,16 +106,16 @@ export function crearSelect({
     placeholderOption.textContent = defaultPlaceholderText;
     placeholderOption.disabled = true;
     placeholderOption.selected = true;
-    nuevoElemento.appendChild(placeholderOption);
+    newElement.appendChild(placeholderOption);
   }
 
   Object.entries(options).forEach(([value, text]) => {
     const option = document.createElement("option");
     option.value = value;
     option.textContent = text;
-    nuevoElemento.appendChild(option);
+    newElement.appendChild(option);
   });
 
-  contenedor.insertAdjacentElement(posicion, nuevoElemento);
-  return nuevoElemento;
+  container.insertAdjacentElement(position, newElement);
+  return newElement;
 }
