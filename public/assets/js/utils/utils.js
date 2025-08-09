@@ -1,4 +1,4 @@
-import { statusContainer, opciones as sections } from "./DOMElements.js";
+import { statusContainer, sections } from "./DOMElements.js";
 
 /**
  * Actualiza el estado de conexion
