@@ -46,7 +46,7 @@ function eventsNavBar() {
 }
 
 /**
- * Inicializar todos los eventos
+ * Inicializar todos los eventos del layout
  */
 export function initializeLayout() {
   // Inicializar estado online
