@@ -1,7 +1,7 @@
 import {
   createSelect,
-  SELECTS_MUNICIPIO,
-  SELECTS_ESTADO,
+  selects_municipality,
+  selects_state,
 } from "./../utils/DOMElements.js";
 
 import {
@@ -356,9 +356,9 @@ export async function inicializarSelectsUbicacion() {
   if (!data) return;
 
   // Llenar todos los selects de estado
-  SELECTS_ESTADO.forEach((estadoId, idx) => {
+  selects_state.forEach((estadoId, idx) => {
     const selectEstado = document.getElementById(estadoId);
-    const selectMunicipio = document.getElementById(SELECTS_MUNICIPIO[idx]);
+    const selectMunicipio = document.getElementById(selects_municipality[idx]);
     if (!selectEstado || !selectMunicipio) return;
 
     // Limpiar y llenar estados
@@ -557,7 +557,7 @@ async function populateForm(form, data) {
         field.dispatchEvent(new Event("change", { bubbles: true }));
       } else {
         field.value = data[key];
-        if (SELECTS_ESTADO.some((id) => field.id === id)) {
+        if (selects_state.some((id) => field.id === id)) {
           field.dispatchEvent(new Event("change", { bubbles: true }));
           if (document.querySelector("#previewEstadoVehiculo")) {
             reformatearEstadoPreview(field);

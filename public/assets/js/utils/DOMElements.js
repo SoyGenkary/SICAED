@@ -1,19 +1,24 @@
-// ELEMENTOS Y CONSTANTES GLOBALES
+// CONSTANTES DE ESTADO
 export const statusContainer = document.querySelector(
   ".main .header .header__onLine"
 );
+
+// CONSTANTE DEL LAYOUT
 export const mainContainer = document.getElementById("content-container");
 export const sectionsLinks = document.querySelectorAll(".option a");
+
+// CONSTANTES DE SECCIONES
 export const LAST_SECTION_KEY = "lastVisitedSection";
 export const DEFAULT_SECTION = "principal";
 
+// CONSTANTES DE FORMULARIOS
 // IDs de los selects de estado y municipio en todos los formularios
-export const SELECTS_ESTADO = [
+export const selects_state = [
   "estadoSedeVehiculo",
   "estadoSedeConductor",
   "estadoSedePersonal",
 ];
-export const SELECTS_MUNICIPIO = [
+export const selects_municipality = [
   "municipioVehiculo",
   "municipioConductor",
   "municipioPersonal",
