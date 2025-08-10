@@ -3,3 +3,6 @@ test/
 
 # Carpeta de Upload
 uploads/
+
+# Archivos
+refactor.md
