@@ -2,7 +2,10 @@ import {
   formatInputDNI,
   formatInputPhoneNumber,
 } from "./../utils/inputFormatters.js";
-import { ntfProcesoErroneo, ntfProcesoExitoso } from "./../utils/utils.js";
+import {
+  ntfProcessError,
+  ntfProcessSuccessful,
+} from "./../utils/utils.js";
 import { apiRequest } from "./../API/api.js";
 
 // Espera a que el contenido del DOM esté completamente cargado y parseado
@@ -59,7 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // Validacion simple para el email del usuario
       if (loginInput && loginInput.value.trim() === "") {
         e.preventDefault();
-        ntfProcesoErroneo("¡Ey!", "Debes ingresar email.");
+        ntfProcessError("¡Ey!", "Debes ingresar email.");
         loginInput.focus();
         return;
       }
@@ -67,7 +70,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // Validación de que las contraseñas coincidan
       if (passwordInput && passwordInput.value.trim() === "") {
         e.preventDefault();
-        ntfProcesoErroneo("¡Ey!", "Debes Ingresar una contraseña");
+        ntfProcessError("¡Ey!", "Debes Ingresar una contraseña");
         passwordInput.focus();
         return;
       }
@@ -80,7 +83,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const response = await apiRequest(formData);
 
       if (!response["success"]) {
-        ntfProcesoErroneo("Oops...", response["message"]);
+        ntfProcessError("Oops...", response["message"]);
       } else {
         location.assign("./layout.php");
       }
@@ -99,7 +102,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // Validacion simple para la Cedula del usuario
       if (cedulaInput && cedulaInput.value.trim() === "") {
         e.preventDefault();
-        ntfProcesoErroneo("¡Ey!", "Debes ingresar tu documento de identidad.");
+        ntfProcessError("¡Ey!", "Debes ingresar tu documento de identidad.");
         cedulaInput.focus();
         return;
       }
@@ -107,7 +110,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // Validacion simple para el telefono del usuario
       if (phoneInput && phoneInput.value.trim() === "") {
         e.preventDefault();
-        ntfProcesoErroneo("¡Ey!", "Debes ingresar tu número de telefono.");
+        ntfProcessError("¡Ey!", "Debes ingresar tu número de telefono.");
         phoneInput.focus();
         return;
       }
@@ -115,7 +118,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // Validacion simple para el email del usuario
       if (emailInput && emailInput.value.trim() === "") {
         e.preventDefault();
-        ntfProcesoErroneo("¡Ey!", "Debes ingresar email.");
+        ntfProcessError("¡Ey!", "Debes ingresar email.");
         emailInput.focus();
         return;
       }
@@ -123,7 +126,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // Validacion simple para el nombre del usuario
       if (nameInput && nameInput.value.trim() === "") {
         e.preventDefault();
-        ntfProcesoErroneo("¡Ey!", "Debes ingresar un nombre de usuario.");
+        ntfProcessError("¡Ey!", "Debes ingresar un nombre de usuario.");
         nameInput.focus();
         return;
       }
@@ -134,7 +137,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const confirmPassword = confirmPasswordInput.value;
         if (password !== confirmPassword) {
           e.preventDefault();
-          ntfProcesoErroneo("¡Ey!", "Las contraseñas no coinciden.");
+          ntfProcessError("¡Ey!", "Las contraseñas no coinciden.");
           confirmPasswordInput.focus();
           return;
         }
@@ -143,7 +146,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // Validación simple para la Clave Maestra
       if (masterKeyInput && masterKeyInput.value.trim() === "") {
         e.preventDefault();
-        ntfProcesoErroneo("¡Ey!", "Por favor, ingrese la Clave Maestra.");
+        ntfProcessError("¡Ey!", "Por favor, ingrese la Clave Maestra.");
         masterKeyInput.focus();
         return;
       }
@@ -159,9 +162,9 @@ document.addEventListener("DOMContentLoaded", () => {
         registerForm.reset();
         registerContainer.classList.remove("active");
         loginContainer.classList.add("active");
-        ntfProcesoExitoso("Proceso Exitoso!", response["message"]);
+        ntfProcessSuccessful("Proceso Exitoso!", response["message"]);
       } else {
-        ntfProcesoErroneo("Oops...", response["message"]);
+        ntfProcessError("Oops...", response["message"]);
       }
     });
   }
