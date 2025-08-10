@@ -19,7 +19,7 @@ import {
   formatInputDNI,
   formatInputPhoneNumber,
 } from "./utils/inputFormatters.js";
-import { cargarDetallesDeBusqueda } from "./sections/detailEntity.js";
+import { loadSearchDetails } from "./sections/detailEntity.js";
 import {
   ocultarBuscador,
   initializeSelectionMenu,
@@ -229,7 +229,7 @@ function manejarClicksContenedor(e) {
   // Manejar clic en las filas de resultados del buscador
   const clickedRow = target.closest("tr[data-id]");
   if (clickedRow) {
-    cargarDetallesDeBusqueda(clickedRow, target);
+    loadSearchDetails(clickedRow, target);
   }
 
   // SECCION NAVEGADOR - Ocultar buscador

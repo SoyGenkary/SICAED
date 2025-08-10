@@ -38,7 +38,7 @@ function eventsNavBar() {
 
   btnHideNavbar.addEventListener("click", () => {
     const navbar = document.querySelector(".nav");
-    if (navbar) return;
+    if (!navbar) return;
 
     navbar.classList.toggle("close");
     btnHideNavbar.classList.toggle("active");
