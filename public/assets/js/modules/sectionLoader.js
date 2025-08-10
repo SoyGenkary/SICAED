@@ -4,7 +4,7 @@ import {
   DEFAULT_SECTION,
   sectionsLinks,
 } from "./../utils/DOMElements.js";
-import { inicializarDetailEntity } from "./../sections/detailEntity.js";
+import { InitializeDetailEntity } from "./../sections/detailEntity.js";
 import { updateSectionSelected } from "./../utils/utils.js";
 
 /**
@@ -12,7 +12,7 @@ import { updateSectionSelected } from "./../utils/utils.js";
  * @param {string} nameSection
  * @returns {string}
  */
-function generarRutaArchivo(nameSection) {
+function generateFilePath(nameSection) {
   return nameSection.includes(".php")
     ? `sections/${nameSection}`
     : `sections/${nameSection}.php`;
@@ -23,7 +23,7 @@ function generarRutaArchivo(nameSection) {
  * @param {string} filePath
  * @returns {Promise<string>}
  */
-async function obtenerContenidoSeccion(filePath) {
+async function getSectionContent(filePath) {
   const response = await fetch(filePath);
   if (!response.ok) {
     throw new Error(
@@ -38,20 +38,20 @@ async function obtenerContenidoSeccion(filePath) {
  * @param {HTMLElement} containerElement - El elemento DOM donde se insertará el HTML.
  * @param {string} html - El contenido HTML a insertar.
  */
-function mostrarContenido(containerElement, html) {
+function showContent(containerElement, html) {
   containerElement.innerHTML = html;
 }
 
 /**
  * Muestra un mensaje de error en el contenedor especificado.
  * @param {HTMLElement} containerElement - El elemento DOM donde se mostrará el error.
- * @param {string} mensaje - El mensaje de error a mostrar.
+ * @param {string} message - El mensaje de error a mostrar.
  */
-function mostrarError(containerElement, mensaje) {
+function showError(containerElement, message) {
   containerElement.innerHTML = `
     <div class="error-container">
       <h2>Error al cargar la sección</h2>
-      <p>${mensaje}</p>
+      <p>${message}</p>
     </div>
   `;
 }
@@ -60,7 +60,7 @@ function mostrarError(containerElement, mensaje) {
  * Guarda la sección actual en localStorage.
  * @param {string} nameSection
  */
-function guardarSeccionEnStorage(nameSection, key = LAST_SECTION_KEY) {
+function saveSectionToStorage(nameSection, key = LAST_SECTION_KEY) {
   localStorage.setItem(key, nameSection);
 }
 
@@ -69,7 +69,7 @@ function guardarSeccionEnStorage(nameSection, key = LAST_SECTION_KEY) {
  * @param {HTMLElement} containerElement - El elemento DOM desde donde se lanza el evento.
  * @param {string} nameSection - El nombre de la sección cargada.
  */
-function notificarCarga(containerElement, nameSection) {
+function notifyLoad(containerElement, nameSection) {
   containerElement.dispatchEvent(
     new CustomEvent("sectionloaded", {
       detail: { sectionName: nameSection },
@@ -87,7 +87,7 @@ function notificarCarga(containerElement, nameSection) {
 export async function loadSection(
   nameSection,
   isInitialLoadFromStorage = false,
-  targetContainer = null // Nuevo parámetro opcional
+  targetContainer = null
 ) {
   // Determina qué contenedor usar: el especificado o el predeterminado
   const currentContainer = targetContainer || mainContainer;
@@ -120,11 +120,11 @@ export async function loadSection(
     mainContainer.style.display = "block";
   }
 
-  const filePath = generarRutaArchivo(nameSection);
+  const filePath = generateFilePath(nameSection);
 
   try {
-    const contenido = await obtenerContenidoSeccion(filePath);
-    mostrarContenido(currentContainer, contenido); // Pasar el contenedor a mostrarContenido
+    const content = await getSectionContent(filePath);
+    showContent(currentContainer, content); // Pasar el contenedor a mostrarContenido
 
     if (currentContainer == document.querySelector("#detailResult-container")) {
       const btnBackButtonModal =
@@ -142,30 +142,26 @@ export async function loadSection(
         );
       }
 
-      inicializarDetailEntity();
+      InitializeDetailEntity();
 
-      guardarSeccionEnStorage(nameSection, "resultado");
+      saveSectionToStorage(nameSection, "resultado");
     }
 
     // Solo guarda en localStorage y actualiza el enlace activo si se carga en el contenedor principal
     if (currentContainer === mainContainer) {
-      guardarSeccionEnStorage(nameSection);
+      saveSectionToStorage(nameSection);
       updateSectionSelected(nameSection);
     }
 
-    notificarCarga(currentContainer, nameSection); // Pasar el contenedor a notificarCarga
+    notifyLoad(currentContainer, nameSection); // Pasar el contenedor a notificarCarga
   } catch (error) {
-    console.error(`Error al cargar la sección '${nameSection}':`, error);
-    mostrarError(currentContainer, error.message); // Pasar el contenedor a mostrarError
+    showError(currentContainer, error.message); // Pasar el contenedor a mostrarError
 
     // La lógica de recarga por defecto solo aplica si el error ocurre en el contenedor principal
     if (currentContainer === mainContainer) {
       if (isInitialLoadFromStorage || nameSection !== DEFAULT_SECTION) {
         localStorage.removeItem(LAST_SECTION_KEY);
         if (nameSection !== DEFAULT_SECTION) {
-          console.warn(
-            `Fallo al cargar '${nameSection}'. Cargando sección por defecto: '${DEFAULT_SECTION}'.`
-          );
           // Llamada recursiva a cargarSeccion, asegurándose de usar el contenedor principal
           await loadSection(DEFAULT_SECTION, false, mainContainer);
         }
@@ -187,5 +183,5 @@ export function loadLastSection() {
 
   if (!exist) lastSection = "status";
 
-  loadSection(lastSection, true, mainContainer); // Asegura que siempre use el contenedor principal
+  loadSection(lastSection, true, mainContainer);
 }

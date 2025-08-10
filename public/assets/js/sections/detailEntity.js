@@ -5,11 +5,11 @@ import { apiRequest } from "../API/api.js";
 /**
  * Inicializar todos los eventos/lógica de la sección detailEntity
  */
-export async function inicializarDetailEntity() {
-  funcionalidadGaleria();
-  funcionalidadDocumentosMantenimiento();
-  funcionalidadDescripcionMantenimiento();
-  funcionalidadBorrar();
+export async function InitializeDetailEntity() {
+  InitializeGalery();
+  InitializeDocsMaintenance();
+  InitializeDescMaintenance();
+  InitializeDeleteLogic();
 }
 
 /**
@@ -17,7 +17,7 @@ export async function inicializarDetailEntity() {
  * @param {HTMLElement} clickedRow - Fila clickeada por el usuario
  * @param {HTMLElement} target - Evento
  */
-export function cargarDetallesDeBusqueda(clickedRow, target) {
+export function loadSearchDetails(clickedRow, target) {
   // Evita que se disparen otros eventos si hacemos clic en un checkbox o un botón de acción dentro de la fila
   if (
     target.matches('input[type="checkbox"]') ||
@@ -51,27 +51,27 @@ export function cargarDetallesDeBusqueda(clickedRow, target) {
 /**
  * Inicializar la logica de los documentos de mantenimiento
  */
-function funcionalidadDocumentosMantenimiento() {
+function InitializeDocsMaintenance() {
   const modal = document.getElementById("modal-docs");
   const btnsOpenDocs = document.querySelectorAll(".info-docs");
 
-  inicializadorEventos(modal, btnsOpenDocs);
+  InitializeEvents(modal, btnsOpenDocs);
 }
 
 /**
  * Inicializar la logica de la descripcion de mantenimiento
  */
-function funcionalidadDescripcionMantenimiento() {
+function InitializeDescMaintenance() {
   const modal = document.getElementById("modal-desc");
   const btnsOpenDesc = document.querySelectorAll(".info-desc");
 
-  inicializadorEventos(modal, btnsOpenDesc);
+  InitializeEvents(modal, btnsOpenDesc);
 }
 
 /**
  * Inicializar la logica de la galeria
  */
-function funcionalidadGaleria() {
+function InitializeGalery() {
   const modal = document.getElementById("modal-galery");
   const modalImg = document.getElementById("modalImg");
   const closeBtn = document.querySelectorAll("#closeBtn");
@@ -116,7 +116,7 @@ function funcionalidadGaleria() {
 /**
  * Inicializar la logica de borrado de archivos
  */
-function funcionalidadBorrar() {
+function InitializeDeleteLogic() {
   const containerFiles = document.querySelectorAll(".file-list");
   const containerModal = document.querySelector("#modal-galery");
   if (containerFiles) {
@@ -138,9 +138,9 @@ function funcionalidadBorrar() {
           const typeFile = item.dataset.type;
           const categoryFile = item.dataset.category;
 
-          const response = await confirmar(e);
+          const response = await confirm(e);
           if (response) {
-            const status = await almacenarInfoArchivo(
+            const status = await storeFileInfo(
               indexFile,
               typeFile,
               categoryFile
@@ -170,13 +170,9 @@ function funcionalidadBorrar() {
         const typeFile = img.dataset.type;
         const categoryFile = img.dataset.category;
 
-        const response = await confirmar(e);
+        const response = await confirm(e);
         if (response) {
-          const status = await almacenarInfoArchivo(
-            indexFile,
-            typeFile,
-            categoryFile
-          );
+          const status = await storeFileInfo(indexFile, typeFile, categoryFile);
 
           if (status["success"]) {
             loadSection(
@@ -196,12 +192,9 @@ function funcionalidadBorrar() {
 /**
  * Configurar eventos principales de cada funcionalidad
  */
-function inicializadorEventos(modal, btns) {
+function InitializeEvents(modal, btns) {
   const closeBtn = document.querySelectorAll(".closeBtn");
-
-  if (!modal) {
-    return;
-  }
+  if (!modal && !btns) return;
 
   btns?.forEach((btn) => {
     btn?.addEventListener("click", async (e) => {
@@ -220,11 +213,10 @@ function inicializadorEventos(modal, btns) {
       const response = await apiRequest(formData);
 
       if (response["success"]) {
-        // MODIFICADO: Se llama a la función de renderizado correspondiente
         if (modal.id === "modal-docs") {
-          mostrarArchivosMantenimiento(response.data);
+          showFilesMaintenance(response.data);
         } else if (modal.id === "modal-desc") {
-          mostrarDescripcionMantenimiento(response.data);
+          showDescMaintenance(response.data);
         }
       } else {
         ntfProcessError("Oops...", "No se pudo cargar el contenido!");
@@ -253,22 +245,20 @@ function inicializadorEventos(modal, btns) {
  * Renderiza la lista de archivos de mantenimiento en el modal.
  * @param {object} data - Los datos del mantenimiento recibidos de la API.
  */
-function mostrarArchivosMantenimiento(data) {
+function showFilesMaintenance(data) {
   const modal = document.getElementById("modal-docs");
   const fileList = modal.querySelector(".file-list");
 
-  // 1. Limpiar la lista anterior
+  // Limpiar la lista anterior
   fileList.innerHTML = "";
 
-  const documentos = data.documentos_existentes;
+  const documents = data.documentos_existentes;
 
-  // 2. Verificar si hay documentos
-  if (documentos && documentos.length > 0) {
-    // 3. Crear y añadir cada elemento de la lista
-    documentos.forEach((doc, index) => {
+  // Verificar si hay documentos
+  if (documents && documents.length > 0) {
+    // Crear y añadir cada elemento de la lista
+    documents.forEach((doc, index) => {
       const listItem = document.createElement("li");
-
-      // Se usan plantillas de texto para crear el HTML interno de forma más limpia
       listItem.innerHTML = `
         <a href="${doc.ruta}" download="${doc.nombreOriginal}" data-index="${index}" data-type="documento" data-category="mantenimiento">
             <span>${doc.nombreOriginal}</span>
@@ -285,9 +275,10 @@ function mostrarArchivosMantenimiento(data) {
       fileList.appendChild(listItem);
     });
   } else {
-    // 4. Si no hay documentos, mostrar un mensaje
+    // Si no hay documentos, mostrar un mensaje
     const listItem = document.createElement("li");
     listItem.textContent = "No hay documentos adjuntos.";
+
     fileList.appendChild(listItem);
   }
 }
@@ -296,9 +287,8 @@ function mostrarArchivosMantenimiento(data) {
  * Muestra la descripción del mantenimiento en el modal correspondiente.
  * @param {object} data - Los datos del mantenimiento recibidos de la API.
  */
-function mostrarDescripcionMantenimiento(data) {
+function showDescMaintenance(data) {
   const modal = document.getElementById("modal-desc");
-  // Asumiendo que tienes un elemento con la clase 'description-content' para mostrar el texto
   const descriptionContent = modal.querySelector(".description-content");
 
   if (descriptionContent) {
@@ -317,7 +307,7 @@ function mostrarDescripcionMantenimiento(data) {
 /**
  * Aviso de confirmación para borrado de archivos
  */
-async function confirmar() {
+async function confirm() {
   const response = await ntfConfirm(
     "¿Seguro que deseas borrar este archivo?",
     "Esta acción es irreversible!"
@@ -331,7 +321,7 @@ async function confirmar() {
  * @param typeFile - Tipo de archivo a eliminar
  * @param categoryFile - Categoria del archivo
  */
-async function almacenarInfoArchivo(indexFile, typeFile, categoryFile) {
+async function storeFileInfo(indexFile, typeFile, categoryFile) {
   if (indexFile && typeFile && categoryFile) {
     let informacion = {
       indexFile: indexFile,
@@ -352,7 +342,6 @@ async function almacenarInfoArchivo(indexFile, typeFile, categoryFile) {
           : "deleteExtra";
         break;
       case "mantenimiento":
-        // Aseguramos que el ID se toma del modal correcto
         id = document.querySelector("#modal-docs").dataset.id;
 
         informacion.ID = id;
