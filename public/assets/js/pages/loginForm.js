@@ -2,10 +2,7 @@ import {
   formatInputDNI,
   formatInputPhoneNumber,
 } from "./../utils/inputFormatters.js";
-import {
-  ntfProcessError,
-  ntfProcessSuccessful,
-} from "./../utils/utils.js";
+import { ntfProcessError, ntfProcessSuccessful } from "./../utils/utils.js";
 import { apiRequest } from "./../API/api.js";
 
 // Espera a que el contenido del DOM esté completamente cargado y parseado
@@ -54,12 +51,13 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // Event listener para el envío del formulario de login
   if (loginForm) {
     loginForm.addEventListener("submit", async (e) => {
       const loginInput = document.getElementById("loginForm");
       const passwordInput = document.getElementById("login-password");
 
-      // Validacion simple para el email del usuario
+      // Validacion para el email del usuario
       if (loginInput && loginInput.value.trim() === "") {
         e.preventDefault();
         ntfProcessError("¡Ey!", "Debes ingresar email.");
@@ -99,7 +97,7 @@ document.addEventListener("DOMContentLoaded", () => {
       );
       const masterKeyInput = document.getElementById("register-master-key"); // Nuevo campo
 
-      // Validacion simple para la Cedula del usuario
+      // Validacion para la Cedula del usuario
       if (cedulaInput && cedulaInput.value.trim() === "") {
         e.preventDefault();
         ntfProcessError("¡Ey!", "Debes ingresar tu documento de identidad.");
@@ -107,7 +105,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-      // Validacion simple para el telefono del usuario
+      // Validacion para el telefono del usuario
       if (phoneInput && phoneInput.value.trim() === "") {
         e.preventDefault();
         ntfProcessError("¡Ey!", "Debes ingresar tu número de telefono.");
@@ -115,7 +113,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-      // Validacion simple para el email del usuario
+      // Validacion para el email del usuario
       if (emailInput && emailInput.value.trim() === "") {
         e.preventDefault();
         ntfProcessError("¡Ey!", "Debes ingresar email.");
@@ -123,7 +121,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-      // Validacion simple para el nombre del usuario
+      // Validacion para el nombre del usuario
       if (nameInput && nameInput.value.trim() === "") {
         e.preventDefault();
         ntfProcessError("¡Ey!", "Debes ingresar un nombre de usuario.");
@@ -143,7 +141,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       }
 
-      // Validación simple para la Clave Maestra
+      // Validación para la Clave Maestra
       if (masterKeyInput && masterKeyInput.value.trim() === "") {
         e.preventDefault();
         ntfProcessError("¡Ey!", "Por favor, ingrese la Clave Maestra.");
