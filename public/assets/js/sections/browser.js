@@ -1,6 +1,6 @@
 import { createInput, createSelect } from "./../utils/DOMElements.js";
 import {
-  formatMatriculaInput,
+  formatInputLicensePlate,
   formatInputDNI,
   formatInputPhoneNumber,
 } from "./../utils/inputFormatters.js";
@@ -446,7 +446,7 @@ export function cambiarFormularioBrowser(tipoDeDato, browserGroup) {
 
       if (matriculaInput) {
         matriculaInput.addEventListener("input", (e) => {
-          e.target.value = formatMatriculaInput(e.target.value);
+          e.target.value = formatInputLicensePlate(e.target.value);
         });
       }
       break;

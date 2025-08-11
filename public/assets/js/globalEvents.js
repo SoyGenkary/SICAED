@@ -15,7 +15,7 @@ import {
   formatoM,
 } from "./sections/administrator.js";
 import {
-  formatMatriculaInput,
+  formatInputLicensePlate,
   formatInputDNI,
   formatInputPhoneNumber,
 } from "./utils/inputFormatters.js";
@@ -304,7 +304,7 @@ function manejarInputsContenedor(e) {
       );
 
       if (target === inputMatricula && previewMatriculaText) {
-        const formattedValue = formatMatriculaInput(target.value);
+        const formattedValue = formatInputLicensePlate(target.value);
         target.value = formattedValue;
         previewMatriculaText.textContent = formattedValue || "MATRICULA";
       }

@@ -2,7 +2,7 @@ import {
   mainContainer, // Sigue importando el contenedor principal por defecto
   LAST_SECTION_KEY,
   DEFAULT_SECTION,
-  sectionsLinks,
+  sectionLinks,
 } from "./../utils/DOMElements.js";
 import { InitializeDetailEntity } from "./../sections/detailEntity.js";
 import { updateSectionSelected } from "./../utils/utils.js";
@@ -176,7 +176,7 @@ export async function loadSection(
 export function loadLastSection() {
   let lastSection = localStorage.getItem(LAST_SECTION_KEY) || "status";
 
-  const exist = Array.from(sectionsLinks).some(
+  const exist = Array.from(sectionLinks).some(
     (enlace) => enlace.dataset.section === lastSection
   );
 

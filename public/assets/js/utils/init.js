@@ -1,5 +1,5 @@
 import { updateStatus } from "./utils.js";
-import { sectionsLinks } from "./DOMElements.js";
+import { sectionLinks } from "./DOMElements.js";
 import { loadSection, loadLastSection } from "./../modules/sectionLoader.js";
 
 /**
@@ -17,7 +17,7 @@ function configStatus() {
  * Evento para la navegacion entre secciones
  */
 function eventsNavigationSections() {
-  sectionsLinks.forEach((section) => {
+  sectionLinks.forEach((section) => {
     section.addEventListener("click", (e) => {
       e.preventDefault();
 

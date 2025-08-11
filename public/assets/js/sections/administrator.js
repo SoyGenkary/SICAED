@@ -1,7 +1,7 @@
 import {
   createSelect,
-  selects_municipality,
-  selects_state,
+  municipalitySelectIds,
+  stateSelectIds,
 } from "./../utils/DOMElements.js";
 
 import {
@@ -13,7 +13,7 @@ import {
 } from "./../API/api.js";
 import { ntfProcessError, ntfProcessSuccessful } from "../utils/utils.js";
 import {
-  formatMatriculaInput,
+  formatInputLicensePlate,
   formatInputDNI,
   formatInputPhoneNumber,
 } from "./../utils/inputFormatters.js";
@@ -62,7 +62,7 @@ function placeholderDNI(inputSearch) {
 }
 
 export function formatoM(e) {
-  e.target.value = formatMatriculaInput(e.target.value);
+  e.target.value = formatInputLicensePlate(e.target.value);
 }
 
 /**
@@ -356,9 +356,9 @@ export async function inicializarSelectsUbicacion() {
   if (!data) return;
 
   // Llenar todos los selects de estado
-  selects_state.forEach((estadoId, idx) => {
+  stateSelectIds.forEach((estadoId, idx) => {
     const selectEstado = document.getElementById(estadoId);
-    const selectMunicipio = document.getElementById(selects_municipality[idx]);
+    const selectMunicipio = document.getElementById(municipalitySelectIds[idx]);
     if (!selectEstado || !selectMunicipio) return;
 
     // Limpiar y llenar estados
@@ -557,7 +557,7 @@ async function populateForm(form, data) {
         field.dispatchEvent(new Event("change", { bubbles: true }));
       } else {
         field.value = data[key];
-        if (selects_state.some((id) => field.id === id)) {
+        if (stateSelectIds.some((id) => field.id === id)) {
           field.dispatchEvent(new Event("change", { bubbles: true }));
           if (document.querySelector("#previewEstadoVehiculo")) {
             reformatearEstadoPreview(field);
@@ -601,7 +601,7 @@ function applySectionSpecificFormatting(form, section, itemData) {
     case "conductores":
       formatField(
         "#matriculaVehiculoAsignado",
-        formatMatriculaInput,
+        formatInputLicensePlate,
         itemData.matriculaVehiculoAsignado
       );
       formatField("#cedulaConductor", formatInputDNI, itemData.cedulaConductor);

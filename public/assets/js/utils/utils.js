@@ -1,4 +1,4 @@
-import { statusContainer, sectionsLinks } from "./DOMElements.js";
+import { statusContainer, sectionLinks } from "./DOMElements.js";
 
 /**
  * Actualiza el estado de conexion
@@ -23,7 +23,7 @@ export function updateStatus() {
  * @param {string} sectionName - Nombre de la seccion a activar
  */
 export function updateSectionSelected(sectionName) {
-  sectionsLinks.forEach((section) => {
+  sectionLinks.forEach((section) => {
     const item = section.closest(".option");
     const data = section?.dataset.section;
 

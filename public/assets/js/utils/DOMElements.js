@@ -1,40 +1,56 @@
-// CONSTANTES DE ESTADO
+// STATE CONSTANTS
 export const statusContainer = document.querySelector(
   ".main .header .header__onLine"
 );
 
-// CONSTANTE DEL LAYOUT
+// LAYOUT CONSTANTS
 export const mainContainer = document.getElementById("content-container");
-export const sectionsLinks = document.querySelectorAll(".option a");
+export const sectionLinks = document.querySelectorAll(".option a");
 
-// CONSTANTES DE SECCIONES
+// SECTION CONSTANTS
 export const LAST_SECTION_KEY = "lastVisitedSection";
-export const DEFAULT_SECTION = "principal";
+export const DEFAULT_SECTION = "main";
 
-// CONSTANTES DE FORMULARIOS
-// IDs de los selects de estado y municipio en todos los formularios
-export const selects_state = [
+// FORM CONSTANTS
+// IDs of the state and municipality selects in all forms
+export const stateSelectIds = [
   "estadoSedeVehiculo",
   "estadoSedeConductor",
   "estadoSedePersonal",
 ];
-export const selects_municipality = [
+export const municipalitySelectIds = [
   "municipioVehiculo",
   "municipioConductor",
   "municipioPersonal",
 ];
 
 /**
- * Crea y agrega un elemento input.
- * @param {object} config - Objeto de configuración.
- * @param {string} config.type - Tipo del input.
- * @param {string} config.name - Nombre del input.
- * @param {string[]} [config.classes=['search__input']] - Array de clases.
- * @param {HTMLElement} config.container - Contenedor donde se agregará.
- * @param {string} [config.position='afterbegin'] - Posición de inserción.
- * @param {HTMLElement} [config.referencia=null] - Elemento de referencia para insertBefore.
- * @param {object} [config.attributes={}] - Atributos adicionales.
- * @param {string} [config.placeholder=''] - Placeholder del input.
+ * Helper: Apply classes to an element.
+ */
+function applyClasses(element, classes) {
+  classes.forEach((cls) => element.classList.add(cls));
+}
+
+/**
+ * Helper: Apply attributes to an element.
+ */
+function applyAttributes(element, attributes) {
+  Object.entries(attributes).forEach(([key, value]) =>
+    element.setAttribute(key, value)
+  );
+}
+
+/**
+ * Create and append an input element.
+ * @param {object} config
+ * @param {string} config.type
+ * @param {string} config.name
+ * @param {string[]} [config.classes=['search__input']]
+ * @param {HTMLElement} config.container
+ * @param {string} [config.position='afterbegin']
+ * @param {HTMLElement} [config.reference=null]
+ * @param {object} [config.attributes={}]
+ * @param {string} [config.placeholder='']
  * @returns {HTMLInputElement|null}
  */
 export function createInput({
@@ -47,44 +63,36 @@ export function createInput({
   attributes = {},
   placeholder = "",
 }) {
-  if (!type || !name || !container) return;
+  if (!type || !name || !(container instanceof HTMLElement)) return null;
 
-  const newElement = document.createElement("input");
-  newElement.type = type;
-  newElement.name = name;
-  newElement.placeholder = placeholder;
+  const inputElement = document.createElement("input");
+  Object.assign(inputElement, { type, name, placeholder });
 
-  classes.forEach((cls) => newElement.classList.add(cls));
+  applyClasses(inputElement, classes);
+  applyAttributes(inputElement, attributes);
 
-  Object.entries(attributes).forEach(([key, value]) =>
-    newElement.setAttribute(key, value)
-  );
-
-  if (
-    reference &&
-    reference.parentNode === container &&
+  if (reference && reference.parentNode === container) {
     position === "beforeend"
-  ) {
-    reference.insertAdjacentElement("afterend", newElement);
-  } else if (reference && reference.parentNode === container) {
-    container.insertBefore(newElement, reference.nextSibling);
+      ? reference.insertAdjacentElement("afterend", inputElement)
+      : container.insertBefore(inputElement, reference.nextSibling);
   } else {
-    container.insertAdjacentElement(position, newElement);
+    container.insertAdjacentElement(position, inputElement);
   }
-  return newElement;
+
+  return inputElement;
 }
 
 /**
- * Crea y agrega un elemento select.
- * @param {object} config - Objeto de configuración.
- * @param {string} config.name - Nombre del select.
- * @param {string} config.id - ID del select.
- * @param {string[]} [config.classes=['search__input']] - Array de clases.
- * @param {HTMLElement} config.container - Contenedor donde se agregará.
- * @param {string} [config.position='afterbegin'] - Posición de inserción.
- * @param {object} [config.options={}] - Opciones del select {value: text}.
- * @param {boolean} [config.addDefaultPlaceholder=false] - Si se añade una opción placeholder deshabilitada.
- * @param {string} [config.defaultPlaceholderText='-- Seleccione --'] - Texto para la opción placeholder.
+ * Create and append a select element.
+ * @param {object} config
+ * @param {string} config.name
+ * @param {string} config.id
+ * @param {string[]} [config.classes=['search__input']]
+ * @param {HTMLElement} config.container
+ * @param {string} [config.position='afterbegin']
+ * @param {object} [config.options={}]
+ * @param {boolean} [config.addDefaultPlaceholder=false]
+ * @param {string} [config.defaultPlaceholderText='-- Select --']
  * @returns {HTMLSelectElement|null}
  */
 export function createSelect({
@@ -95,32 +103,29 @@ export function createSelect({
   position = "afterbegin",
   options = {},
   addDefaultPlaceholder = false,
-  defaultPlaceholderText = "-- Seleccione --",
+  defaultPlaceholderText = "-- Select --",
 }) {
-  if (!name || !id || !container) return;
+  if (!name || !id || !(container instanceof HTMLElement)) return null;
 
-  const newElement = document.createElement("select");
-  newElement.name = name;
-  newElement.id = id;
-
-  classes.forEach((cls) => newElement.classList.add(cls));
+  const selectElement = document.createElement("select");
+  Object.assign(selectElement, { name, id });
+  applyClasses(selectElement, classes);
 
   if (addDefaultPlaceholder) {
-    const placeholderOption = document.createElement("option");
-    placeholderOption.value = "";
-    placeholderOption.textContent = defaultPlaceholderText;
+    const placeholderOption = new Option(
+      defaultPlaceholderText,
+      "",
+      true,
+      true
+    );
     placeholderOption.disabled = true;
-    placeholderOption.selected = true;
-    newElement.appendChild(placeholderOption);
+    selectElement.appendChild(placeholderOption);
   }
 
-  Object.entries(options).forEach(([value, text]) => {
-    const option = document.createElement("option");
-    option.value = value;
-    option.textContent = text;
-    newElement.appendChild(option);
-  });
+  Object.entries(options).forEach(([value, text]) =>
+    selectElement.appendChild(new Option(text, value))
+  );
 
-  container.insertAdjacentElement(position, newElement);
-  return newElement;
+  container.insertAdjacentElement(position, selectElement);
+  return selectElement;
 }
