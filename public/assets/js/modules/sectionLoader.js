@@ -162,7 +162,6 @@ export async function loadSection(
       if (isInitialLoadFromStorage || nameSection !== DEFAULT_SECTION) {
         localStorage.removeItem(LAST_SECTION_KEY);
         if (nameSection !== DEFAULT_SECTION) {
-          // Llamada recursiva a cargarSeccion, asegurándose de usar el contenedor principal
           await loadSection(DEFAULT_SECTION, false, mainContainer);
         }
       }

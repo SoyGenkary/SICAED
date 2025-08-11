@@ -3,7 +3,7 @@
  * @param {string} value
  * @returns {string}
  */
-export function formatMatriculaInput(value) {
+export function formatInputLicensePlate(value) {
   const cleaned = value
     .toUpperCase()
     .replace(/[^A-Z0-9]/g, "")
@@ -13,7 +13,6 @@ export function formatMatriculaInput(value) {
   }
   return `${cleaned.slice(0, 3)}${cleaned.slice(3)}`;
 }
-
 
 /**
  * Formatea el valor del input como XX.XXX.XXX.
@@ -30,7 +29,6 @@ export function formatInputDNI(value) {
   if (match[3]) formatted += "." + match[3];
   return formatted;
 }
-
 
 /**
  * Formatea el valor del input como 0XXX-XXXXXXX.

@@ -6,7 +6,6 @@ export async function apiRequest(formData) {
     body: formData,
   });
   if (!response.ok) throw new Error(`Error: ${response.status}`);
-  // console.log(await response.text());
   return await response.json();
 }
 
