@@ -5,6 +5,10 @@ import {
 import { ntfProcessError, ntfProcessSuccessful } from "./../utils/utils.js";
 import { apiRequest } from "./../API/api.js";
 
+/**
+ * Asigna el evento para mostrar el formulario de registro
+ * y ocultar el de login cuando se hace clic en el enlace correspondiente.
+ */
 function eventRegisterLink(loginContainer, registerContainer) {
   const showRegisterLink = document.getElementById("show-register");
 
@@ -12,13 +16,17 @@ function eventRegisterLink(loginContainer, registerContainer) {
     showRegisterLink.addEventListener("click", (e) => {
       e.preventDefault();
       if (loginContainer && registerContainer) {
-        loginContainer.classList.remove("active"); // Ocultar formulario de login
-        registerContainer.classList.add("active"); // Mostrar formulario de registro
+        loginContainer.classList.remove("active"); // Oculta login
+        registerContainer.classList.add("active"); // Muestra registro
       }
     });
   }
 }
 
+/**
+ * Valida que un campo de entrada no esté vacío.
+ * Si está vacío, muestra un mensaje de error y enfoca el campo.
+ */
 function validationInput(input, message) {
   if (input && input.value.trim() === "") {
     e.preventDefault();
@@ -27,17 +35,25 @@ function validationInput(input, message) {
   }
 }
 
+/**
+ * Formatea automáticamente los campos de cédula y teléfono
+ * mientras el usuario escribe.
+ */
 function eventFormatInput(cedulaInput, phoneInput) {
   if (cedulaInput && phoneInput) {
     cedulaInput.addEventListener("input", (e) => {
-      e.target.value = formatInputDNI(e.target.value);
+      e.target.value = formatInputDNI(e.target.value); // Formatea cédula
     });
     phoneInput.addEventListener("input", (e) => {
-      e.target.value = formatInputPhoneNumber(e.target.value);
+      e.target.value = formatInputPhoneNumber(e.target.value); // Formatea teléfono
     });
   }
 }
 
+/**
+ * Configura el evento de envío del formulario de registro
+ * con validaciones de datos antes de llamar a la API.
+ */
 function eventSubmitRegisterForm(
   registerForm,
   loginContainer,
@@ -51,25 +67,20 @@ function eventSubmitRegisterForm(
     registerForm.addEventListener("submit", async (e) => {
       e.preventDefault();
 
+      // Obtención de campos clave
       const passwordInput = document.getElementById("register-password");
       const confirmPasswordInput = document.getElementById(
         "register-confirm-password"
       );
       const masterKeyInput = document.getElementById("register-master-key");
 
-      // Validacion para la Cedula del usuario
+      // Validaciones de campos obligatorios
       validationInput(cedulaInput, "Debes ingresar tu documento de identidad.");
-
-      // Validacion para el telefono del usuario
       validationInput(phoneInput, "Debes ingresar tu número de telefono.");
-
-      // Validacion para el email del usuario
       validationInput(emailInput, "Debes ingresar tu email.");
-
-      // Validacion para el nombre del usuario
       validationInput(nameInput, "Debes ingresar tu nombre de usuario.");
 
-      // Validación de que las contraseñas coincidan
+      // Validación de coincidencia de contraseñas
       if (passwordInput && confirmPasswordInput) {
         const password = passwordInput.value;
         const confirmPassword = confirmPasswordInput.value;
@@ -81,37 +92,43 @@ function eventSubmitRegisterForm(
         }
       }
 
-      // Validación para la Clave Maestra
+      // Validación de Clave Maestra
       validationInput(masterKeyInput, "Debes ingresar la Clave Maestra.");
 
-      // Logica de envio de formulario
+      // Envío de datos a la API
       registerRequestAPI(registerForm, loginContainer, registerContainer);
     });
   }
 }
 
+/**
+ * Envía los datos del formulario de registro a la API
+ * y gestiona la respuesta del servidor.
+ */
 async function registerRequestAPI(
   registerForm,
   loginContainer,
   registerContainer
 ) {
-  // Llamada a la api
   const formData = new FormData(registerForm);
   formData.append("section", "user");
   formData.append("action", "add");
+
   const response = await apiRequest(formData);
 
-  // Muestreo de respuesta
   if (response["success"]) {
-    registerForm.reset();
-    registerContainer.classList.remove("active");
-    loginContainer.classList.add("active");
+    registerForm.reset(); // Limpia el formulario
+    registerContainer.classList.remove("active"); // Oculta registro
+    loginContainer.classList.add("active"); // Muestra login
     ntfProcessSuccessful("Proceso Exitoso!", response["message"]);
   } else {
     ntfProcessError("Oops...", response["message"]);
   }
 }
 
+/**
+ * Inicializa todos los eventos asociados al formulario de registro.
+ */
 function eventsRegisterForm(registerContainer, loginContainer) {
   const cedulaInput = document.getElementById("register-cedula");
   const phoneInput = document.getElementById("register-telefono");
@@ -119,13 +136,8 @@ function eventsRegisterForm(registerContainer, loginContainer) {
   const nameInput = document.getElementById("register-name");
   const registerForm = document.getElementById("register-form");
 
-  // Event listener para mostrar el formulario de registro
-  eventRegisterLink(loginContainer, registerContainer);
-
-  // Event listener para formatear automaticamente algunos inputs
-  eventFormatInput(cedulaInput, phoneInput);
-
-  // Event listener para el envío del formulario de registro
+  eventRegisterLink(loginContainer, registerContainer); // Mostrar registro
+  eventFormatInput(cedulaInput, phoneInput); // Formateo en vivo
   eventSubmitRegisterForm(
     registerForm,
     loginContainer,
@@ -134,37 +146,49 @@ function eventsRegisterForm(registerContainer, loginContainer) {
     phoneInput,
     emailInput,
     nameInput
-  );
+  ); // Envío con validaciones
 }
 
+/**
+ * Asigna el evento para mostrar el formulario de login
+ * y ocultar el de registro.
+ */
 function eventShowForm(loginContainer, registerContainer) {
   const showLoginLink = document.getElementById("show-login");
 
   if (showLoginLink) {
     showLoginLink.addEventListener("click", (e) => {
       e.preventDefault();
-
       if (loginContainer && registerContainer) {
-        registerContainer.classList.remove("active"); // Ocultar formulario de registro
-        loginContainer.classList.add("active"); // Mostrar formulario de login
+        registerContainer.classList.remove("active"); // Oculta registro
+        loginContainer.classList.add("active"); // Muestra login
       }
     });
   }
 }
 
+/**
+ * Envía los datos del formulario de login a la API
+ * y redirige al usuario si las credenciales son correctas.
+ */
 async function loginRequestAPI(loginForm) {
   const formData = new FormData(loginForm);
   formData.append("section", "user");
   formData.append("action", "login");
+
   const response = await apiRequest(formData);
 
   if (!response["success"]) {
     ntfProcessError("Oops...", response["message"]);
   } else {
-    location.assign("./layout.php");
+    location.assign("./layout.php"); // Redirección en caso de éxito
   }
 }
 
+/**
+ * Configura el evento de envío del formulario de login
+ * con validaciones básicas de campos.
+ */
 function eventSubmitLoginForm(loginForm) {
   if (loginForm) {
     loginForm.addEventListener("submit", async (e) => {
@@ -173,35 +197,28 @@ function eventSubmitLoginForm(loginForm) {
       const loginInput = document.getElementById("loginForm");
       const passwordInput = document.getElementById("login-password");
 
-      // Validacion para el email del usuario
       validationInput(loginInput, "Debes ingresar email.");
-
-      // Validación de que las contraseñas coincidan
       validationInput(passwordInput, "Debes Ingresar una contraseña");
 
-      // Logica de envio de formulario
-      loginRequestAPI(loginForm);
+      loginRequestAPI(loginForm); // Envío a la API
     });
   }
 }
 
+/**
+ * Inicializa todos los eventos asociados al formulario de login.
+ */
 function eventsLoginForm(loginContainer, registerContainer, loginForm) {
-  // Event listener para mostrar el formulario de inicio de sesión
-  eventShowForm(loginContainer, registerContainer);
-
-  // Event listener para el envío del formulario de inicio de sesión
-  eventSubmitLoginForm(loginForm);
+  eventShowForm(loginContainer, registerContainer); // Mostrar login
+  eventSubmitLoginForm(loginForm); // Envío con validaciones
 }
 
+// Ejecución al cargar el DOM
 document.addEventListener("DOMContentLoaded", () => {
-  // Selección de elementos del DOM
   const loginContainer = document.getElementById("login-container");
   const registerContainer = document.getElementById("register-container");
   const loginForm = document.getElementById("login-form");
 
-  // Eventos relacionados al registro
-  eventsRegisterForm(registerContainer, loginContainer);
-
-  // Eventos relacionados con el login
-  eventsLoginForm(loginContainer, registerContainer, loginForm);
+  eventsRegisterForm(registerContainer, loginContainer); // Eventos de registro
+  eventsLoginForm(loginContainer, registerContainer, loginForm); // Eventos de login
 });
