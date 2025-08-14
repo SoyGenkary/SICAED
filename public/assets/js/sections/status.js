@@ -4,14 +4,14 @@ import { apiRequest } from "./../API/api.js";
  * Inicializamos la seccion de Estado Detallado
  */
 export async function initializeStatus() {
-  await mostrarDatos();
+  await showData();
 }
 
 /**
  * Consultamos los datos para el posterior muestreo al usuario
  * @returns data - Los datos obtenidos del resumen de la base de datos
  */
-async function consultarDatos(type) {
+async function consultData(type) {
   const formData = new FormData();
 
   // Separamos la logica en secciones
@@ -32,20 +32,20 @@ async function consultarDatos(type) {
  * Muetreo de los datos de cada seccion correspondiente
  * @param {JSON} data - Los datos a mostrar
  */
-async function mostrarDatos() {
+async function showData() {
   // Estadisticas
-  const dataEstadisticas = await consultarDatos("estadisticas");
-  configurarEstadistica(dataEstadisticas);
+  const dataEstadisticas = await consultData("estadisticas");
+  configureStatistics(dataEstadisticas);
 
   // Resumenes
-  configurarResumenes(dataEstadisticas);
+  configureSummaries(dataEstadisticas);
 }
 
 /**
  * Configura las estadisticas con los datos correspondientes
  * @param {JSON} data - JSON con los datos de las estadisticas
  */
-function configurarEstadistica(data) {
+function configureStatistics(data) {
   const ctx = document.querySelector(".myChart");
   if (ctx) {
     const myChart = new Chart(ctx, {
@@ -59,6 +59,8 @@ function configurarEstadistica(data) {
               data[0]["matenimientos"] ? data[0]["matenimientos"] : 0,
             ],
             backgroundColor: ["#4CAF50", "#FFC107"],
+            borderColor: ["#4CAF50", "#FFC107"],
+            borderWidth: 1,
           },
         ],
       },
@@ -72,7 +74,7 @@ function configurarEstadistica(data) {
 /**
  * Configura los datos resumidos de los vehiculos
  */
-function configurarResumenes(data) {
+function configureSummaries(data) {
   const summaryItems = document.querySelectorAll(".summary-item");
 
   if (summaryItems) {
