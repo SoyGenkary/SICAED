@@ -25,8 +25,8 @@ import {
   initializeSelectionMenu,
 } from "./sections/browser.js";
 import {
-  inicializarMenuPerfil,
-  inicializarPerfil,
+  initializeProfileMenu,
+  initializeProfile,
 } from "./sections/profile.js";
 import { inicializarPrincipal } from "./sections/principal.js";
 import { initializeStatus } from "./sections/status.js";
@@ -41,7 +41,7 @@ export function registrarEventosGlobales() {
     mainContainer.addEventListener("sectionloaded", (event) => {
       const { sectionName } = event.detail;
       if (sectionName === "profile") {
-        inicializarPerfil();
+        initializeProfile();
       } else if (sectionName === "principal") {
         inicializarPrincipal();
       } else if (sectionName === "browser") {
@@ -67,7 +67,7 @@ export function registrarEventosGlobales() {
   }
 
   // Eventos del menú de perfil
-  inicializarMenuPerfil();
+  initializeProfileMenu();
 }
 
 /**

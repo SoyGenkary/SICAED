@@ -15,7 +15,7 @@ import {
 } from "./../utils/inputFormatters.js";
 
 // Funciones de inicialización específicas por sección
-export function inicializarPerfil() {
+export function initializeProfile() {
   const photoInput = document?.getElementById("photoPerfil");
   const photoPreview = document?.querySelector(
     ".perfil-section .photo__container img"
@@ -238,7 +238,7 @@ export function inicializarPerfil() {
   }
 }
 
-export function inicializarMenuPerfil() {
+export function initializeProfileMenu() {
   const profileImgContainer = document.querySelector(".profile__img-container");
   const profileImgClickable = document.querySelector(".profile__img-clickable");
   const profileDropdownMenu = document.querySelector(".profile__dropdown-menu");
