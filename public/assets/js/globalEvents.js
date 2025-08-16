@@ -28,7 +28,7 @@ import {
   initializeProfileMenu,
   initializeProfile,
 } from "./sections/profile.js";
-import { inicializarPrincipal } from "./sections/principal.js";
+import { initializePrincipal } from "./sections/principal.js";
 import { initializeStatus } from "./sections/status.js";
 import { initializeManagement } from "./sections/management.js";
 
@@ -43,7 +43,7 @@ export function registrarEventosGlobales() {
       if (sectionName === "profile") {
         initializeProfile();
       } else if (sectionName === "principal") {
-        inicializarPrincipal();
+        initializePrincipal();
       } else if (sectionName === "browser") {
         initializeSelectionMenu();
       } else if (sectionName === "management") {

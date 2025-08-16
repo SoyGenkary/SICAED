@@ -1,34 +1,34 @@
 import { loadSection } from "./../modules/sectionLoader.js";
 
-export function inicializarPrincipal() {
-  const resumenes = document.querySelector(".principal__resumen");
-  const tablaVehiculos = document.querySelector(".vehiculos-recientes");
+export function initializePrincipal() {
+  const summaries = document.querySelector(".principal__resumen");
+  const tableVehicles = document.querySelector(".vehiculos-recientes");
 
-  if (resumenes && tablaVehiculos) {
-    const detallesCantidad = resumenes.querySelectorAll(".resumen");
-    detallesCantidad.forEach((linkDetalles) => {
-      linkDetalles.addEventListener("click", verDetalles);
+  if (summaries && tableVehicles) {
+    const detailsCount = summaries.querySelectorAll(".resumen");
+    detailsCount.forEach((linkDetails) => {
+      linkDetails.addEventListener("click", viewDetails);
     });
 
-    const detallesTabla = tablaVehiculos.querySelector("tbody a");
-    detallesTabla.addEventListener("click", (e) => {
+    const detailsTable = tableVehicles.querySelector("tbody a");
+    detailsTable.addEventListener("click", (e) => {
       loadSection("browser");
     });
   }
 }
 
-function verDetalles(e) {
-  const elementoClickeado = e.currentTarget;
-  const clases = elementoClickeado.classList;
+function viewDetails(e) {
+  const clickElement = e.currentTarget;
+  const classes = clickElement.classList;
 
-  if (clases.length >= 2) {
-    const segundaClase = clases[1];
+  if (classes.length >= 2) {
+    const secondClass = classes[1];
 
-    if (segundaClase === "resumen-vehiculos") {
+    if (secondClass === "resumen-vehiculos") {
       loadSection("status");
-    } else if (segundaClase === "resumen-conductores") {
+    } else if (secondClass === "resumen-conductores") {
       loadSection("browser");
-    } else if (segundaClase === "resumen-mantenimientos") {
+    } else if (secondClass === "resumen-mantenimientos") {
       loadSection("browser");
     }
   }

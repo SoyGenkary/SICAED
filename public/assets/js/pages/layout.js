@@ -1,7 +1,7 @@
 import { initializeLayout } from "../utils/init.js";
 import { registrarEventosGlobales } from "../globalEvents.js";
 
-export function inicializarSICAED() {
+export function initializeSICAED() {
   initializeLayout();
   registrarEventosGlobales();
 }
